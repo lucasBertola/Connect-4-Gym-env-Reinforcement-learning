@@ -33,7 +33,7 @@ env = ConnectFourEnv(opponent=BabyPlayer())
 
 - **ConsolePlayer**: Asks for moves to play in the console. Perfect for testing your own AI.
 
-## Elo Ratings
+### Elo Ratings
 
 Here are the Elo ratings of the different algorithms:
 
@@ -49,6 +49,21 @@ Here are the Elo ratings of the different algorithms:
 9.  MinimaxPlayer depth 1: 1174
 10. BabyPlayer:             985
 ```
+
+## Testing
+
+We believe in the importance of testing. That's why we have included a suite of tests in the `test` directory. To run the tests, simply use the command `pytest`.
+
+## Contribute & Support
+
+We warmly welcome contributions from the community. If you have an idea for an improvement or found a bug, don't hesitate to open an issue or submit a pull request. Your input is greatly appreciated, and our project is made better by your participation!
+
+If you find this repository useful, please give it a star!
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
 Todo 
 - readme
 - test
