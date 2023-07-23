@@ -1,4 +1,18 @@
-# Connect-4-env
+# Connect Four Environment
+
+Welcome to the Connect Four Environment repository!
+This is a versatile and engaging environment designed for reinforcement learning agents. 
+The goal of the game is to connect four of your own pieces in a row, either horizontally, vertically, or diagonally, while preventing your opponent from doing the same.
+The environment can be used with both Fully Connected Networks (FCN) and Convolutional Neural Networks (CNN).
+
+## Features
+
+- **Customizable Board Size**: You can easily adjust the size of the board to challenge your agent with different levels of complexity.
+- **FCN and CNN Compatible**: The environment is designed to work seamlessly with both FCN and CNN policies. This makes it a great playground to experiment with different types of neural networks.
+- **Human Render Mode**: Watch your agent learn in real-time with the human render mode. It's not just about the numbers, it's also about the journey!
+- **Two-Player Mode**: Train your agent against another AI or even a human opponent to test its performance in real-world scenarios.
+- **OpenAI Gym / Gymnasium Compatible**: Connect Four follows the OpenAI Gym / Gymnasium interface, making it compatible with a wide range of reinforcement learning libraries and algorithms.
+
 
 ## Available Players
 
