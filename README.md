@@ -1,3 +1,6 @@
+<p align="center">
+    <img src="https://github.com/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/ressources/gifRobot.gif" width="500px"/>
+</p>
 # Connect Four Environment
 
 Welcome to the Connect 4 Environment repository!
