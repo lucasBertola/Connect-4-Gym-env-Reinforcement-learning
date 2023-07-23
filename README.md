@@ -180,15 +180,3 @@ If you find this repository useful, please give it a star!
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-Todo 
-- readme
-- test
-- pip
-- exemple
-- exemple with jupiter
-- bot readme
-- benchmark perf with bot 
-- readme for using of elo leadeerboard
-- working with conv network
-- readme: tester son ia
