@@ -18,6 +18,40 @@ The main goal of this project is to provide a simple and easy-to-use environment
 - **Human Render Mode**: Watch your agent learn in real-time with the human render mode. It's not just about the numbers, it's also about the journey!
 - **Two-Player Mode**: Train your agent against another AI or even a human opponent to test its performance in real-world scenarios.
 
+## Installation
+
+To use the MiniGrid environment, you can install it directly into your project using pip:
+
+```bash
+pip install gymnasium-connect-four
+```
+
+## Usage
+
+Import the `ConnectFourEnv` class, and his opponant (for exemple the very easy player `BabyPlayer` )
+
+```python
+from connect_four_gymnasium import ConnectFourEnv
+from connect_four_gymnasium.players import BabyPlayer
+```
+
+Here is a simple example of how to use the environment with PPO:
+
+```python
+from connect_four_gymnasium import ConnectFourEnv
+from connect_four_gymnasium.players import BabyPlayer
+from stable_baselines3 import PPO
+        
+env = ConnectFourEnv(opponent=BabyPlayer())
+model = PPO("MlpPolicy", env, verbose=1)
+
+model.learn(total_timesteps=(100000))
+```
+
+For detailed usage instructions and examples, please refer to the [examples](https://github.com/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/tree/main/exemples) directory or check out our [Colab Notebook](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/PPO_MlpPolicy.ipynb).
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/PPO_MlpPolicy.ipynb)
+
 ## Environment Details
 
 In this section, we provide an overview of the Connect Four environment, including the action space, observation space, rewards, and episode termination conditions.
