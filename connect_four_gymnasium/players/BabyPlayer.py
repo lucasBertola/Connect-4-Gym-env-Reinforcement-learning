@@ -1,10 +1,12 @@
-
 import numpy as np
-import copy
+from .Player import Player
 
+class BabyPlayer(Player):
 
-class BabyPlayer():
-    def play(self, observation):
+    def __init__(self, _=""):
+        pass
+
+    def play(self, _):
         return np.random.randint(0, 7)
     def getName(self):
         return "BabyPlayer"

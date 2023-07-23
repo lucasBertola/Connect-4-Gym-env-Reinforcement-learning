@@ -1,8 +1,6 @@
+from .Player import Player
 
-import numpy as np
-import copy
-
-class ModelPlayer():
+class ModelPlayer(Player):
     def __init__(self, model,name="Model",deteministic=True):
         self.model = model
         self.name = name
