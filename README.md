@@ -2,6 +2,11 @@
 
 ## Available Players
 
+This library provides a collection of Connect Four bots with different skill levels. These bots can be used for various purposes, such as:
+
+- **Learning by playing against them**: You can improve your AI model by playing against these bots, which range from beginner to advanced levels.
+- **Comparing the level of self-learning models**: By playing against these bots, you can evaluate the performance of your self-learning model and position it in terms of skill level and elo.
+
 You can integrate players as opponents in your gym environment like this:
 
 ```python
@@ -10,7 +15,7 @@ env = ConnectFourEnv(opponent=BabyPlayer())
 
 ### Player Descriptions
 
-- **MinimaxPlayer**: An implementation of the Minimax algorithm. Can be used with different search depths (e.g., `MinimaxPlayer(depth=3)`), but it is very slow, so it is not recommended for general use. All other algorithms are much faster.
+- **MinMaxPlayer**: An implementation of the Minimax algorithm. Can be used with different search depths (e.g., `MinMaxPlayer(depth=3)`), but it is very slow, so it is not recommended for general use. All other algorithms are much faster.
 
 - **BabyPlayer**: Plays random moves.
 
@@ -24,7 +29,7 @@ env = ConnectFourEnv(opponent=BabyPlayer())
 
 - **AdultPlayer**: Same as TeenagerSmarterPlayer, but also checks if a move creates a line of three tokens with available spaces on both sides for the opponent. If so, it will play that move to block the opponent.
 
-- **AdultSmarterPlayer**: Same as AdultPlayer, but checks if a move allows the opponent to create multiple ways to win and plays that move. Also checks if a move allows the player to create multiple ways to win and plays that move to protect itself.
+- **AdultSmarterPlayer**: Same as AdultPlayer, but checks if a move allows to create multiple ways to win and plays that move. Also checks if a move allows the opponent to create multiple ways to win and plays that move to protect itself.
 
 - **ConsolePlayer**: Asks for moves to play in the console. Perfect for testing your own AI.
 
@@ -43,7 +48,7 @@ Here are the Elo ratings of the different algorithms:
 8.  ChildPlayer:           1223
 9.  MinimaxPlayer depth 1: 1174
 10. BabyPlayer:             985
-
+```
 Todo 
 - readme
 - test

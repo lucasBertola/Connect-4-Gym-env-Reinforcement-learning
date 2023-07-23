@@ -1,7 +1,7 @@
 import numpy as np
 from .Player import Player
 
-class MinimaxPlayer(Player):
+class MinMaxPlayer(Player):
     def __init__(self, depth=2):
         self.depth = depth
 

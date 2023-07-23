@@ -9,7 +9,7 @@ from connect_four_gymnasium.players import (
     ChildSmarterPlayer,
     TeenagerPlayer,
     TeenagerSmarterPlayer,
-    MinimaxPlayer,
+    MinMaxPlayer,
 )
 from connect_four_gymnasium.ConnectFourEnv import ConnectFourEnv
 
@@ -72,22 +72,22 @@ if __name__ == "__main__":
         TeenagerSmarterPlayer(),
         AdultPlayer(),
         AdultSmarterPlayer(),
-        MinimaxPlayer(depth=1),
-        MinimaxPlayer(depth=2),
-        MinimaxPlayer(depth=3),
+        MinMaxPlayer(depth=1),
+        MinMaxPlayer(depth=2),
+        MinMaxPlayer(depth=3),
     ]
 
     elo_leaderboard = EloLeaderboard(players)
     elo_leaderboard.play_and_display()
 
 # Elo rankings after 21 matches:
-# 1. AdultSmarterPlayer: 1767
-# 2. MinimaxPlayer depth 3: 1710
-# 3. AdultPlayer: 1689
-# 4. TeenagerSmarterPlayer: 1664
-# 5. TeenagerPlayer: 1644
-# 6. MinimaxPlayer depth 2: 1596
-# 7. ChildSmarterPlayer: 1548
-# 8. ChildPlayer: 1223
-# 9. MinimaxPlayer depth 1: 1174
-# 10. BabyPlayer: 985
+# 1.  AdultSmarterPlayer:    1767
+# 2.  MinimaxPlayer depth 3: 1710
+# 3.  AdultPlayer:           1689
+# 4.  TeenagerSmarterPlayer: 1664
+# 5.  TeenagerPlayer:        1644
+# 6.  MinimaxPlayer depth 2: 1596
+# 7.  ChildSmarterPlayer:    1548
+# 8.  ChildPlayer:           1223
+# 9.  MinimaxPlayer depth 1: 1174
+# 10. BabyPlayer:             985
