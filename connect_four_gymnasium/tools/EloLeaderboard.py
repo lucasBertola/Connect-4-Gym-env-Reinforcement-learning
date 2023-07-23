@@ -1,16 +1,7 @@
 import math
 import sys
 sys.path.append('../../')
-from connect_four_gymnasium.players import (
-    AdultPlayer,
-    AdultSmarterPlayer,
-    BabyPlayer,
-    ChildPlayer,
-    ChildSmarterPlayer,
-    TeenagerPlayer,
-    TeenagerSmarterPlayer,
-    MinMaxPlayer,
-)
+
 from connect_four_gymnasium.ConnectFourEnv import ConnectFourEnv
 
 
@@ -63,6 +54,16 @@ class EloLeaderboard:
 
 
 if __name__ == "__main__":
+    from connect_four_gymnasium.players import (
+    AdultPlayer,
+    AdultSmarterPlayer,
+    BabyPlayer,
+    ChildPlayer,
+    ChildSmarterPlayer,
+    TeenagerPlayer,
+    TeenagerSmarterPlayer,
+    MinMaxPlayer,
+)
     # Create a list of players
     players = [
         BabyPlayer(),

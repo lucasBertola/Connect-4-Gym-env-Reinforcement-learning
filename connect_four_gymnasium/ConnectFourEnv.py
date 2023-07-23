@@ -176,6 +176,8 @@ class ConnectFourEnv(gymnasium.Env):
         windows_width = (padding * 2) + (circle_radius * 2 * self.COLUMNS_COUNT) + padding_center * (self.COLUMNS_COUNT - 1)
         end_height_board = (padding * 2) + (circle_radius * 2 * self.ROWS_COUNT) + padding_center * (self.ROWS_COUNT - 1)
         windows_height = end_height_board + text_players_size
+        
+        pygame.font.init()
         # if render GUI, we want to limit the frame rate to X FPS for better visualization
         if self.render_mode == "human":
             self.wait_for_render()
@@ -227,7 +229,7 @@ class ConnectFourEnv(gymnasium.Env):
             pygame.event.pump()
             pygame.display.update()
         else:
-            return np.transpose
+            return np.transpose(pygame.surfarray.array3d(canvas), (1, 0, 2))
         
         def close(self):
             if self.window is not None:
