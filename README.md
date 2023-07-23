@@ -55,18 +55,9 @@ In addition to the provided players, we also offer a tool to evaluate the Elo ra
 Here is how to use it in Python:
 
 ```python
-from connect_four_gymnasium import ConnectFourEnv
-from connect_four_gymnasium.players import BabyPlayer
-from stable_baselines3 import PPO
-
 env = ConnectFourEnv(opponent=BabyPlayer())
 model = PPO("MlpPolicy", env, verbose=1)
 model.learn(total_timesteps=10000)
-
-from connect_four_gymnasium.tools import EloLeaderboard
-from connect_four_gymnasium.players import (
-    AdultPlayer,    AdultSmarterPlayer,    BabyPlayer,    ChildPlayer,    ChildSmarterPlayer,    TeenagerPlayer,    TeenagerSmarterPlayer,    ModelPlayer,
-)
 
 myModelPlayer = ModelPlayer(model,name="Your trained Model")
 
@@ -75,9 +66,6 @@ players = [
     ChildPlayer(),
     ChildSmarterPlayer(),
     TeenagerPlayer(),
-    TeenagerSmarterPlayer(),
-    AdultPlayer(),
-    AdultSmarterPlayer(),
     myModelPlayer
 ]
 
