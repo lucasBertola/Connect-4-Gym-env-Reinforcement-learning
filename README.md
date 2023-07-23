@@ -50,6 +50,45 @@ Here are the Elo ratings of the different algorithms:
 10. BabyPlayer:             985
 ```
 
+In addition to the provided players, we also offer a tool to evaluate the Elo rating of your own AI model. This is extremely useful to have an "absolute" idea of the progress of your AI. For example, if an AI learns by fighting against itself, we know that it is getting stronger as it would be able to win against its older versions, but this is not enough to evaluate if it has learned a lot. This is where our tool comes in, which allows you to give an Elo rating to the AI.
+
+Here is how to use it in Python:
+
+```python
+from connect_four_gymnasium import ConnectFourEnv
+from connect_four_gymnasium.players import BabyPlayer
+from stable_baselines3 import PPO
+
+env = ConnectFourEnv(opponent=BabyPlayer())
+model = PPO("MlpPolicy", env, verbose=1)
+model.learn(total_timesteps=10000)
+
+from connect_four_gymnasium.tools import EloLeaderboard
+from connect_four_gymnasium.players import (
+    AdultPlayer,    AdultSmarterPlayer,    BabyPlayer,    ChildPlayer,    ChildSmarterPlayer,    TeenagerPlayer,    TeenagerSmarterPlayer,    ModelPlayer,
+)
+
+myModelPlayer = ModelPlayer(model,name="Your trained Model")
+
+players = [
+    BabyPlayer(),
+    ChildPlayer(),
+    ChildSmarterPlayer(),
+    TeenagerPlayer(),
+    TeenagerSmarterPlayer(),
+    AdultPlayer(),
+    AdultSmarterPlayer(),
+    myModelPlayer
+]
+
+elo_leaderboard = EloLeaderboard(players)
+elo_leaderboard.play_and_display(num_matches=10)
+```
+
+You can find an example of how to use this tool in a Google Colab notebook [here](https://colab.research.google.com/github/lucasBertola/Connect-4-env/blob/main/exemples/PPO_MlpPolicy.ipynb).
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lucasBertola/Connect-4-env/blob/main/exemples/PPO_MlpPolicy.ipynb)
+
 ## Testing
 
 We believe in the importance of testing. That's why we have included a suite of tests in the `test` directory. To run the tests, simply use the command `pytest`.
