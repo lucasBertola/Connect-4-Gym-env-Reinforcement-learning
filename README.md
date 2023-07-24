@@ -50,7 +50,7 @@ model.learn(total_timesteps=(100000))
 
 For detailed usage instructions and examples, please refer to the [examples](https://github.com/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/tree/main/exemples) directory or check out our [Colab Notebook](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/PPO_MlpPolicy.ipynb).
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/PPO_MlpPolicy.ipynb)
+<a href="https://colab.research.google.com/github/lucasBertola/Connect-4-env/blob/main/exemples/PPO_MlpPolicy.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 
 ## Environment Details
 
