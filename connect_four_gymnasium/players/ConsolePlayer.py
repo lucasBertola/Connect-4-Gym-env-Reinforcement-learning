@@ -21,3 +21,6 @@ class ConsolePlayer(Player):
 
     def isDeterministic(self):
         return False
+    
+    def getElo(self):
+        return None

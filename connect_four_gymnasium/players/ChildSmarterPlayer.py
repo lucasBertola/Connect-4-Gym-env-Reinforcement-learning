@@ -28,6 +28,9 @@ class ChildSmarterPlayer(Player):
     def getName(self):
         return "ChildSmarterPlayer"
 
+    def getElo(self):
+        return 1525
+    
     def isDeterministic(self):
         return False
 

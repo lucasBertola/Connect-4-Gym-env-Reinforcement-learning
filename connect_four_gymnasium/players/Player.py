@@ -5,6 +5,9 @@ class Player:
     def play(self, observation):
         raise NotImplementedError("The 'play' method must be implemented in the child class")
 
+    def getElo(self):
+        return None
+    
     def getName(self):
         return self.name
 

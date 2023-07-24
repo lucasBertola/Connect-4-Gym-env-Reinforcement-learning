@@ -18,6 +18,9 @@ class MinMaxPlayer(Player):
     def getName(self):
         return f"MinimaxPlayer depth {self.depth}"
 
+    def getElo(self):
+        return None
+    
     def isDeterministic(self):
         return False
 

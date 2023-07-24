@@ -128,16 +128,16 @@ env = ConnectFourEnv(opponent=BabyPlayer())
 Here are the Elo ratings of the different algorithms:
 
 ```
-1.  AdultSmarterPlayer:    1767
-2.  MinimaxPlayer depth 3: 1710
-3.  AdultPlayer:           1689
-4.  TeenagerSmarterPlayer: 1664
-5.  TeenagerPlayer:        1644
-6.  MinimaxPlayer depth 2: 1596
-7.  ChildSmarterPlayer:    1548
-8.  ChildPlayer:           1223
-9.  MinimaxPlayer depth 1: 1174
-10. BabyPlayer:             985
+1. AdultSmarterPlayer:    1767
+2. AdultPlayer:           1712
+3. MinimaxPlayer depth 3: 1672
+4. MinimaxPlayer depth 2: 1622
+5. TeenagerSmarterPlayer: 1611
+6. TeenagerPlayer:        1604
+7. ChildSmarterPlayer:    1525
+8. MinimaxPlayer depth 1: 1220
+9. ChildPlayer:           1208
+10. BabyPlayer:            995
 ```
 
 In addition to the provided players, we also offer a tool to evaluate the Elo rating of your own AI model. This is extremely useful to have an "absolute" idea of the progress of your AI. For example, if an AI learns by fighting against itself, we know that it is getting stronger as it would be able to win against its older versions, but this is not enough to evaluate if it has learned a lot. This is where our tool comes in, which allows you to give an Elo rating to the AI.
@@ -151,16 +151,7 @@ model.learn(total_timesteps=10000)
 
 myModelPlayer = ModelPlayer(model,name="Your trained Model")
 
-players = [
-    BabyPlayer(),
-    ChildPlayer(),
-    ChildSmarterPlayer(),
-    TeenagerPlayer(),
-    myModelPlayer
-]
-
-elo_leaderboard = EloLeaderboard(players)
-elo_leaderboard.play_and_display(num_matches=10)
+your_model_elo = EloLeaderboard().get_elo([myModelPlayer], num_matches=100)
 ```
 
 You can find an example of how to use this tool in a Google Colab notebook [here](https://colab.research.google.com/github/lucasBertola/Connect-4-env/blob/main/exemples/PPO_MlpPolicy.ipynb).

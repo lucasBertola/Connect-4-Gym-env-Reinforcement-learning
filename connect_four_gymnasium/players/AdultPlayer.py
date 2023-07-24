@@ -5,7 +5,7 @@ class AdultPlayer(Player):
     
     def __init__(self, _=""):
         pass
-
+    
     def play(self, observation):
         moves_to_avoid = []
 
@@ -56,6 +56,9 @@ class AdultPlayer(Player):
     def getName(self):
         return "AdultPlayer"
 
+    def getElo(self):
+        return 1712
+    
     def isDeterministic(self):
         return False
 

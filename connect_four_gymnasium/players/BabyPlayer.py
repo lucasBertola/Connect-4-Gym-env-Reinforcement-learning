@@ -10,5 +10,7 @@ class BabyPlayer(Player):
         return np.random.randint(0, 7)
     def getName(self):
         return "BabyPlayer"
+    def getElo(self):
+        return 995
     def isDeterministic(self):
         return False

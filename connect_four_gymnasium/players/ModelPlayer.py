@@ -14,3 +14,6 @@ class ModelPlayer(Player):
     
     def isDeterministic(self):
         return True
+    
+    def getElo(self):
+        return None

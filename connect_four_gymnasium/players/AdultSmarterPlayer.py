@@ -92,3 +92,6 @@ class AdultSmarterPlayer(Player):
 
     def getName(self):
         return "AdultSmarterPlayer"
+    
+    def getElo(self):
+        return 1767

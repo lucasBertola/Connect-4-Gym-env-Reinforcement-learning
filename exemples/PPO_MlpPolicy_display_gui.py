@@ -8,7 +8,7 @@ from stable_baselines3 import PPO
 env = ConnectFourEnv(opponent=BabyPlayer())
 model = PPO("MlpPolicy", env, verbose=1)
 
-model.learn(total_timesteps=(100000))
+model.learn(total_timesteps=(50000))
 
 env = ConnectFourEnv(opponent= BabyPlayer(), render_mode="human")
 

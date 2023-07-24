@@ -50,6 +50,9 @@ class TeenagerSmarterPlayer(Player):
     def getName(self):
         return "TeenagerSmarterPlayer"
 
+    def getElo(self):
+        return 1611
+    
     def isDeterministic(self):
         return False
 
