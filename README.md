@@ -72,13 +72,13 @@ from stable_baselines3 import PPO
 
 env = ConnectFourEnv(opponent=BabyPlayer())
 model = PPO("MlpPolicy", env, verbose=1)
-model.learn(total_timesteps=10000)
-
 opponent = ModelPlayer(model, name="yourself")
 env.change_opponent(opponent)
+
+model.learn(total_timesteps=10000)
 ```
 
-In this example, we first train the AI model against a `BabyPlayer` for 10,000 timesteps. Then, we create a `ModelPlayer` using the trained model and set it as the opponent for the environment. This allows the AI model to continue learning by playing against itself.
+In this example, , we create a `ModelPlayer` using the model and set it as the opponent for the environment. This allows the AI model to continue learning by playing against itself.
 
 You can directly test self-play training in the provided Google Colab notebook at the following link:
 
