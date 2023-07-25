@@ -82,7 +82,7 @@ In this example, , we create a `ModelPlayer` using the model and set it as the o
 
 You can directly test self-play training in the provided Google Colab notebook at the following link:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/Self_play_training.py.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/Self_play_training.ipynb)
 
 ## Environment Details
 
