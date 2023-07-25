@@ -10,3 +10,4 @@ from .MinMaxPlayer import MinMaxPlayer
 
 from .ModelPlayer import ModelPlayer
 from .ConsolePlayer import ConsolePlayer
+from .SimulatePlayer import SimulatePlayer

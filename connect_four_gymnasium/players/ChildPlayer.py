@@ -9,8 +9,8 @@ class ChildPlayer(Player):
         # Check if a winning move is available for the player
         for move in range(7):
             if observation[0, move] == 0:
-                new_board = self.apply_move(observation, move, 1)
-                if self.check_win(new_board, 1):
+                new_board, row, col = self.apply_move(observation, move, 1)
+                if self.check_win_around_last_move(new_board, 1, row, col):
                     return move
 
         return np.random.choice(range(7))
@@ -29,22 +29,25 @@ class ChildPlayer(Player):
         for i in range(5, -1, -1):
             if new_board[i, move] == 0:
                 new_board[i, move] = player
-                break
-        return new_board
+                return new_board, i, move
 
-    def check_win(self, board, player):
-        for i in range(6):
-            for j in range(4):
-                if (board[i, j:j+4] == player).all():
-                    return True
-        for i in range(3):
-            for j in range(7):
-                if (board[i:i+4, j] == player).all():
-                    return True
-        for i in range(3):
-            for j in range(4):
-                if (board[i:i+4, j:j+4].diagonal() == player).all():
-                    return True
-                if (board[i:i+4, j:j+4][::-1].diagonal() == player).all():
-                    return True
+    def check_win_around_last_move(self, board, player, row, col):
+        directions = [
+            (1, 0),  # horizontal
+            (0, 1),  # vertical
+            (1, 1),  # diagonal /
+            (1, -1)  # diagonal \
+        ]
+
+        for dr, dc in directions:
+            count = 0
+            for step in range(-3, 4):
+                r, c = row + step * dr, col + step * dc
+                if 0 <= r < 6 and 0 <= c < 7 and board[r, c] == player:
+                    count += 1
+                    if count == 4:
+                        return True
+                else:
+                    count = 0
+
         return False

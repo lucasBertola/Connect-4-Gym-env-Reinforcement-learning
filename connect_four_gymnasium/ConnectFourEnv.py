@@ -38,7 +38,7 @@ class ConnectFourEnv(gymnasium.Env):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
-        self.board = np.zeros((self.ROWS_COUNT, self.COLUMNS_COUNT))
+        self._board = np.zeros((self.ROWS_COUNT, self.COLUMNS_COUNT))
         self.render_for_human()
 
         if self.first_player is None:
@@ -47,7 +47,7 @@ class ConnectFourEnv(gymnasium.Env):
             self.next_player_to_play = self.first_player
         # If it's the opponent's turn, make the opponent play
         if self.next_player_to_play == 2:
-            opponent_action = self.opponent.play(self.board)
+            opponent_action = self.opponent.play(self._board)
             result = self.play_action(opponent_action, self.next_player_to_play)
             if result != 0:
                 print('wtf')
@@ -57,14 +57,14 @@ class ConnectFourEnv(gymnasium.Env):
 
         self.render_for_human()
 
-        return self.board, {}
+        return self._board, {}
 
     def render_for_human(self):
         if self.render_mode == "human":
             self._render_frame()
 
     def is_column_full(self, column):
-        return self.board[0, column] != 0
+        return self._board[0, column] != 0
 
     def is_action_valid(self, action):
         return action >= self.MIN_INDEX_TO_PLAY and action < self.COLUMNS_COUNT and not self.is_column_full(action)
@@ -73,11 +73,11 @@ class ConnectFourEnv(gymnasium.Env):
         if not self.is_action_valid(action):
             return -1
 
-        self.drop_piece(action, player)
+        last_move_row = self.drop_piece(action, player)
 
         self.render_for_human()
 
-        if self.check_win(player):
+        if self.check_win_around_last_move(player, last_move_row, action):
             if self.render_mode == "human":
                 print("You won!")
                 time.sleep(5)
@@ -86,13 +86,9 @@ class ConnectFourEnv(gymnasium.Env):
         return 0
 
     def inverse_player_position(self):
-        new_board = np.zeros((self.ROWS_COUNT, self.COLUMNS_COUNT))
-        for i in range(self.ROWS_COUNT):
-            for j in range(self.COLUMNS_COUNT):
-                if self.board[i, j] == 1:
-                    new_board[i, j] = 2
-                elif self.board[i, j] == 2:
-                    new_board[i, j] = 1
+        new_board = np.zeros_like(self._board)
+        new_board[self._board == 1] = 2
+        new_board[self._board == 2] = 1
         return new_board
 
     def step(self, action):
@@ -103,12 +99,12 @@ class ConnectFourEnv(gymnasium.Env):
 
         result = self.play_action(action, self.next_player_to_play)
         if result == 1:
-            return self.board, 1, True, False, {}
+            return self._board, 1, True, False, {}
         elif result == -1:
-            return self.board, -1, True, False, {}
+            return self._board, -1, True, False, {}
 
-        if np.all(self.board != 0):
-            return self.board, 0, True, False, {}
+        if np.all(self._board != 0):
+            return self._board, 0, True, False, {}
 
         self.next_player_to_play = 2
 
@@ -119,42 +115,47 @@ class ConnectFourEnv(gymnasium.Env):
         result = self.play_action(opponent_action, self.next_player_to_play)
 
         if result == 1:
-            return self.board, -1, True, False, {}
+            return self._board, -1, True, False, {}
         elif result == -1:
-            return self.board, 1, True, False, {}
+            return self._board, 1, True, False, {}
 
-        if np.all(self.board != 0):
-            return self.board, 0, True, False, {}
+        if np.all(self._board != 0):
+            return self._board, 0, True, False, {}
 
         self.next_player_to_play = 1
 
-        return self.board, 0, False, False, {}
+        return self._board, 0, False, False, {}
 
     def drop_piece(self, action, player):
         for i in range(self.ROWS_COUNT - 1, -1, -1):
-            if self.board[i, action] == 0:
-                self.board[i, action] = player
-                return
+            if self._board[i, action] == 0:
+                self._board[i, action] = player
+                return i
         print('wtf', self.is_action_valid(action))
         exit("Someone played an invalid action!")
 
-    def check_win(self, player):
-        # Check horizontal, vertical and diagonal lines for a win
-        for i in range(self.ROWS_COUNT):
-            for j in range(self.COLUMNS_COUNT - 3):
-                if (self.board[i, j:j + 4] == player).all():
-                    return True
-        for i in range(self.ROWS_COUNT - 3):
-            for j in range(self.COLUMNS_COUNT):
-                if (self.board[i:i + 4, j] == player).all():
-                    return True
-        for i in range(self.ROWS_COUNT - 3):
-            for j in range(self.COLUMNS_COUNT - 3):
-                if (self.board[i:i + 4, j:j + 4].diagonal() == player).all():
-                    return True
-                if (self.board[i:i + 4, j:j + 4][::-1].diagonal() == player).all():
-                    return True
+    def check_win_around_last_move(self, player, row, col):
+        directions = [
+            (1, 0),  # horizontal
+            (0, 1),  # vertical
+            (1, 1),  # diagonal /
+            (1, -1)  # diagonal \
+        ]
+
+        for dr, dc in directions:
+            count = 0
+            for step in range(-3, 4):
+                r, c = row + step * dr, col + step * dc
+                if 0 <= r < self.ROWS_COUNT and 0 <= c < self.COLUMNS_COUNT and self._board[r, c] == player:
+                    count += 1
+                    if count == 4:
+                        return True
+                else:
+                    count = 0
+
         return False
+    
+    
 
     def render(self):
         if self.render_mode == "rgb_array":
@@ -199,9 +200,9 @@ class ConnectFourEnv(gymnasium.Env):
             j_position = padding
             for j in range(self.COLUMNS_COUNT):
                 color = (245, 245, 245)
-                if self.board[i, j] == 1:
+                if self._board[i, j] == 1:
                     color = self.player_1_color
-                elif self.board[i, j] == 2:
+                elif self._board[i, j] == 2:
                     color = self.player_2_color
                 pygame.draw.circle(canvas, color, (j_position + circle_radius, i_position + circle_radius), circle_radius)
                 j_position += (circle_radius * 2) + padding_center

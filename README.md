@@ -146,7 +146,7 @@ Here is how to use it in Python:
 
 ```python
 env = ConnectFourEnv(opponent=BabyPlayer())
-model = PPO("MlpPolicy", env, verbose=1)
+model = PPO("MlpPolicy", env)
 model.learn(total_timesteps=10000)
 
 myModelPlayer = ModelPlayer(model,name="Your trained Model")

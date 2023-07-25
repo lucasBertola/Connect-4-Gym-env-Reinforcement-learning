@@ -13,7 +13,7 @@ class ModelPlayer(Player):
         return self.name
     
     def isDeterministic(self):
-        return True
+        return self.deteministic
     
     def getElo(self):
         return None
