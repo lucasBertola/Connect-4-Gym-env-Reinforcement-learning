@@ -24,7 +24,7 @@ class EloLeaderboard:
             TeenagerPlayer(),
             TeenagerSmarterPlayer(),
             AdultPlayer(),
-            # AdultSmarterPlayer()
+            AdultSmarterPlayer()
         ]
 
     def update_elo(self, player_elo, opponent_elo, player_won, k_factor=32, draw=False):
@@ -48,7 +48,7 @@ class EloLeaderboard:
             player_won = score > 0
             draw = score == 0
             opponent_elo = opponent.getElo()
-            k_factor = 32 / (1 + gamePlayed / 10)
+            k_factor = 400 / (1 + (gamePlayed))
             actualElo = self.update_elo(actualElo, opponent_elo, player_won, k_factor, draw)
             gamePlayed += 1
 
@@ -83,7 +83,6 @@ class EloLeaderboard:
 
 
 if __name__ == "__main__":
-    from connect_four_gymnasium.players import (TeenagerSmarterPlayer)
 
     elo_leaderboard = EloLeaderboard()
-    print(elo_leaderboard.get_elo([TeenagerSmarterPlayer()], num_matches=100))
+    print(elo_leaderboard.get_elo(AdultSmarterPlayer(), num_matches=100))
