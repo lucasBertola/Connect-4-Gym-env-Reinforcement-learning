@@ -51,10 +51,10 @@ model = PPO("MlpPolicy", env, verbose=1)
 model.learn(total_timesteps=(100000))
 ```
 
-For detailed usage instructions and examples, please refer to the [examples](https://github.com/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/tree/main/exemples) directory or check out our [Colab Notebook](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/PPO_MlpPolicy.ipynb).
+For detailed usage instructions and examples, please refer to the [examples](https://github.com/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/tree/main/exemples) directory or check out our [Colab Notebook](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/Train_ppo_and_test.ipynb).
 
 
-<a href="https://colab.research.google.com/github/lucasBertola/Connect-4-env/blob/main/exemples/PPO_MlpPolicy.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+<a href="https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/Train_ppo_and_test.ipynb" target="_blank"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 
 ### Self-Play Training
 
@@ -186,9 +186,7 @@ myModelPlayer = ModelPlayer(model,name="Your trained Model")
 your_model_elo = EloLeaderboard().get_elo([myModelPlayer], num_matches=100)
 ```
 
-You can find an example of how to use this tool in a Google Colab notebook [here](https://colab.research.google.com/github/lucasBertola/Connect-4-env/blob/main/exemples/PPO_MlpPolicy.ipynb).
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lucasBertola/Connect-4-env/blob/main/exemples/PPO_MlpPolicy.ipynb)
+You can find an example of how to use this tool in a Google Colab notebook [here](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/Train_ppo_and_test.ipynb).
 
 ## Testing
 

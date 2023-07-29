@@ -20,7 +20,7 @@ class ConnectFourEnv(gymnasium.Env):
     def change_opponent(self, opponent):
         self.opponent = opponent
 
-    def __init__(self, opponent, render_mode=None, first_player=None):
+    def __init__(self, opponent=None, render_mode=None, first_player=None):
         self.opponent = opponent  # Define the opponent
         # Define the action and observation spaces
         self.action_space = spaces.Discrete(self.COLUMNS_COUNT)
@@ -45,17 +45,18 @@ class ConnectFourEnv(gymnasium.Env):
             self.next_player_to_play = np.random.choice([1, 2])
         else:
             self.next_player_to_play = self.first_player
-        # If it's the opponent's turn, make the opponent play
-        if self.next_player_to_play == 2:
-            opponent_action = self.opponent.play(self._board)
-            result = self.play_action(opponent_action, self.next_player_to_play)
-            if result != 0:
-                print('wtf')
-                print(opponent_action)
-                exit("The opponent played an invalid action in the first move!")
-            self.next_player_to_play = 1
 
-        self.render_for_human()
+        if self.opponent is not None:
+            if self.next_player_to_play == 2:
+                opponent_action = self.opponent.play(self._board)
+                result = self.play_action(opponent_action, self.next_player_to_play)
+                if result != 0:
+                    print('wtf')
+                    print(opponent_action)
+                    exit("The opponent played an invalid action in the first move!")
+                self.next_player_to_play = 1
+
+            self.render_for_human()
 
         return self._board, {}
 
@@ -82,48 +83,42 @@ class ConnectFourEnv(gymnasium.Env):
                 print("You won!")
                 time.sleep(5)
             return 1
+        
+        if self.board_is_full():
+            return 0
 
         return 0
 
+    def board_is_full(self):
+        return np.all(self._board != 0)
+    
     def inverse_player_position(self):
         new_board = np.zeros_like(self._board)
         new_board[self._board == 1] = 2
         new_board[self._board == 2] = 1
         return new_board
 
-    def step(self, action):
-        if self.next_player_to_play == 2:
-            exit("It's not your turn!")
-
+    def switch_player(self):
+        self.next_player_to_play = 3 - self.next_player_to_play
+        
+    def step(self, action, play_opponent=True):
         action = action.item() if isinstance(action, np.ndarray) else action
 
         result = self.play_action(action, self.next_player_to_play)
-        if result == 1:
-            return self._board, 1, True, False, {}
-        elif result == -1:
-            return self._board, -1, True, False, {}
+        if result != 0:
+            return self._board, result, True, False, {}
+        self.switch_player()
 
-        if np.all(self._board != 0):
-            return self._board, 0, True, False, {}
-
-        self.next_player_to_play = 2
-
-        # because 1 is you, 2 is the opponent
-        # you need to see the board as the opponent sees it
-        opponent_action = self.opponent.play(self.inverse_player_position())
-
-        result = self.play_action(opponent_action, self.next_player_to_play)
-
-        if result == 1:
-            return self._board, -1, True, False, {}
-        elif result == -1:
-            return self._board, 1, True, False, {}
-
-        if np.all(self._board != 0):
-            return self._board, 0, True, False, {}
-
-        self.next_player_to_play = 1
-
+        if  play_opponent and self.opponent is not None:
+            # because 1 is you, 2 is the opponent
+            # you need to see the board as the opponent sees it
+            opponent_action = self.opponent.play(self.inverse_player_position())
+            opponent_result = self.step(opponent_action, play_opponent=False)
+            return opponent_result[0],-1* opponent_result[1], opponent_result[2], opponent_result[3], opponent_result[4]
+        elif self.opponent is None:
+            boardToReturn = self._board if self.next_player_to_play == 1 else self.inverse_player_position()
+            return boardToReturn, 0, False, False, {}
+            
         return self._board, 0, False, False, {}
 
     def drop_piece(self, action, player):
@@ -155,8 +150,6 @@ class ConnectFourEnv(gymnasium.Env):
 
         return False
     
-    
-
     def render(self):
         if self.render_mode == "rgb_array":
             return self._render_frame()
