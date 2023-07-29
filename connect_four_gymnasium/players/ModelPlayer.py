@@ -5,9 +5,9 @@ class ModelPlayer(Player):
         self.model = model
         self.name = name
         self.deteministic = deteministic
-    def play(self, observation):
-        action, _states = self.model.predict(observation,deterministic=self.deteministic)
-        return action
+    def play(self, observations): #todo other bot : make able to takes multiples observations
+        actions, _states = self.model.predict(observations,deterministic=self.deteministic)
+        return actions
         
     def getName(self):
         return self.name

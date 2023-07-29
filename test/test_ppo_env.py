@@ -28,7 +28,7 @@ def test_is_determinist_with_ppo():
             obs, _ = env.reset()
 
     # Check if the model is deterministic
-    assert np.sum(allrewards) == -9, "The model is not determinist"
+    assert np.sum(allrewards) == 8, "The model is not determinist"
 
 
 def test_is_working_with_ppo():

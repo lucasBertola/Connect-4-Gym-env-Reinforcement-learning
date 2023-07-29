@@ -120,8 +120,6 @@ env = ConnectFourEnv(opponent=BabyPlayer())
 
 ### Player Descriptions
 
-- **MinMaxPlayer**: An implementation of the Minimax algorithm. Can be used with different search depths (e.g., `MinMaxPlayer(depth=3)`), but it is very slow, so it is not recommended for general use. All other algorithms are much faster.
-
 - **BabyPlayer**: Plays random moves.
 
 - **ChildPlayer**: Plays random moves, but if there is a winning move, it will play it.
@@ -143,16 +141,13 @@ env = ConnectFourEnv(opponent=BabyPlayer())
 Here are the Elo ratings of the different algorithms:
 
 ```
-1. AdultSmarterPlayer:    1767
-2. AdultPlayer:           1712
-3. MinimaxPlayer depth 3: 1672
-4. MinimaxPlayer depth 2: 1622
-5. TeenagerSmarterPlayer: 1611
-6. TeenagerPlayer:        1604
-7. ChildSmarterPlayer:    1525
-8. MinimaxPlayer depth 1: 1220
-9. ChildPlayer:           1208
-10. BabyPlayer:            995
+1.  AdultSmarterPlayer:    1790
+2.  AdultPlayer:           1654
+5.  TeenagerSmarterPlayer: 1647
+6.  TeenagerPlayer:        1639
+7.  ChildSmarterPlayer:    1571
+9.  ChildPlayer:           1222
+10. BabyPlayer:            1000
 ```
 
 In addition to the provided players, we also offer a tool to evaluate the Elo rating of your own AI model. This is extremely useful to have an "absolute" idea of the progress of your AI. For example, if an AI learns by fighting against itself, we know that it is getting stronger as it would be able to win against its older versions, but this is not enough to evaluate if it has learned a lot. This is where our tool comes in, which allows you to give an Elo rating to the AI.

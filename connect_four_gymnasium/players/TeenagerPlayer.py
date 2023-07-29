@@ -6,31 +6,32 @@ class TeenagerPlayer(Player):
 
     def __init__(self, _=""):
         pass
-    
-    def play(self, observation):
+
+    def play_single(self, observation):
         moves_to_avoid = []
 
         # Check for a winning move for the player
         for move in range(7):
             if observation[0, move] == 0:
-                new_board = self.apply_move(observation, move, 1)
-                if self.check_win(new_board, 1):
+                new_board, row, col = self.apply_move(observation, move, 1)
+                if self.check_win_around_last_move(new_board, 1, row, col):
                     return move
 
         # Check for a winning move for the opponent
         for move in range(7):
             if observation[0, move] == 0:
-                new_board = self.apply_move(observation, move, 2)
-                if self.check_win(new_board, 2):
+                new_board, row, col = self.apply_move(observation, move, 2)
+                if self.check_win_around_last_move(new_board, 2, row, col):
                     return move
 
         # Check if a move allows the opponent to win by playing the same move again
         for move in range(7):
             if observation[0, move] == 0:
-                new_board = self.apply_move(observation, move, 1)
-                new_board = self.apply_move(new_board, move, 2)
-                if self.check_win(new_board, 2):
-                    moves_to_avoid.append(move)
+                new_board, row, col = self.apply_move(observation, move, 1)
+                if new_board[0, move] == 0:
+                    new_board, row, col = self.apply_move(new_board, move, 2)
+                    if self.check_win_around_last_move(new_board, 2, row, col):
+                        moves_to_avoid.append(move)
 
         # Play a random move among valid moves, excluding moves_to_avoid
         valid_moves = [c for c in range(7) if observation[0, c] == 0 and c not in moves_to_avoid]
@@ -39,14 +40,24 @@ class TeenagerPlayer(Player):
         if not valid_moves:
             valid_moves = [c for c in range(7) if observation[0, c] == 0]
 
+        if not valid_moves:
+            print('no valid_move.. i don t want to suicide myself',valid_moves,observation)
+            exit()
+
         return np.random.choice(valid_moves)
+
+    def play(self, obs):
+        if isinstance(obs, list):
+            return [self.play_single(o) for o in obs]
+        else:
+            return self.play_single(obs)
 
     def getName(self):
         return "TeenagerPlayer"
 
     def getElo(self):
-        return 1604
-    
+        return 1639
+
     def isDeterministic(self):
         return False
 
@@ -55,22 +66,27 @@ class TeenagerPlayer(Player):
         for i in range(5, -1, -1):
             if new_board[i, move] == 0:
                 new_board[i, move] = player
-                break
-        return new_board
+                return new_board, i, move
+        print('wtf')
+        exit()
 
-    def check_win(self, board, player):
-        for i in range(6):
-            for j in range(4):
-                if (board[i, j:j+4] == player).all():
-                    return True
-        for i in range(3):
-            for j in range(7):
-                if (board[i:i+4, j] == player).all():
-                    return True
-        for i in range(3):
-            for j in range(4):
-                if (board[i:i+4, j:j+4].diagonal() == player).all():
-                    return True
-                if (board[i:i+4, j:j+4][::-1].diagonal() == player).all():
-                    return True
+    def check_win_around_last_move(self, board, player, row, col):
+        directions = [
+            (1, 0),  # horizontal
+            (0, 1),  # vertical
+            (1, 1),  # diagonal /
+            (1, -1)  # diagonal \
+        ]
+
+        for dr, dc in directions:
+            count = 0
+            for step in range(-3, 4):
+                r, c = row + step * dr, col + step * dc
+                if 0 <= r < 6 and 0 <= c < 7 and board[r, c] == player:
+                    count += 1
+                    if count == 4:
+                        return True
+                else:
+                    count = 0
+
         return False

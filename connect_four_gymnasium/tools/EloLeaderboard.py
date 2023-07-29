@@ -1,5 +1,6 @@
 import math
 import sys
+import random
 sys.path.append('../../')
 
 from connect_four_gymnasium.ConnectFourEnv import ConnectFourEnv
@@ -23,7 +24,7 @@ class EloLeaderboard:
             TeenagerPlayer(),
             TeenagerSmarterPlayer(),
             AdultPlayer(),
-            AdultSmarterPlayer()
+            # AdultSmarterPlayer()
         ]
 
     def update_elo(self, player_elo, opponent_elo, player_won, k_factor=32, draw=False):
@@ -38,56 +39,51 @@ class EloLeaderboard:
         new_elo = player_elo + k_factor * (actual_outcome - expected_outcome)
         return new_elo
     
-    def play_round(self, k_factor, player, actualElo):
-        # Iterate through all possible player-opponent pairs
-        for opponent in self.playersWithEloFixed:
-            player_score = self.get_score(player, opponent)
-            player_won = player_score > 0
-            draw = player_score == 0
+    def play_rounds(self, player, actualElo,num_matches):
+        gamePlayed = 0
+        all_match_opponents = [player for player in self.playersWithEloFixed for _ in range(num_matches)]
+        random.shuffle(all_match_opponents)
+        scores = self.get_scores(player, all_match_opponents)
+        for opponent, score in zip(all_match_opponents, scores):
+            player_won = score > 0
+            draw = score == 0
             opponent_elo = opponent.getElo()
-            actualElo = self.update_elo(actualElo, opponent_elo, player_won, k_factor,draw)
-        
+            k_factor = 32 / (1 + gamePlayed / 10)
+            actualElo = self.update_elo(actualElo, opponent_elo, player_won, k_factor, draw)
+            gamePlayed += 1
+
         return actualElo
 
-    def get_elo(self, player, num_matches=100,display_log=True):
-
+    def get_elo(self, player, num_matches=400):
         actualElo = player.getElo() if player.getElo() is not None else 1500
-        
-        # Play the specified number of matches
-        for i in range(num_matches*2):
-            k_factor = 32 / (1 + i / 10)
-            actualElo = self.play_round(k_factor,player,actualElo)
-            if display_log:
-                print(f"Elo rankings after {i+1} matches: {actualElo}")
+        return self.play_rounds(player,actualElo,num_matches)
 
-        return actualElo
+    def get_scores(self, player, opponents):
+        envs = [ConnectFourEnv(opponent=opponent) for opponent in opponents]
+        obs_list = [obs for obs, _ in [env.reset() for env in envs]]
+        scores = [0] * len(opponents)
+        remaining_indices = list(range(len(opponents)))
 
-    def get_score(self, player, opponent):
-        # Initialize the game environment
-        env = ConnectFourEnv(opponent=opponent)
-        obs, _ = env.reset()
-        # Play the game until it ends
-        while True:
-            action = player.play(obs)
-            obs, rewards, dones, truncated, _ = env.step(action)
-            if truncated or dones:
-                obs, _ = env.reset()
-                return rewards
+        while remaining_indices:
+            actions = player.play([obs_list[i] for i in remaining_indices])
+            new_remaining_indices = []
+
+            for i, action in zip(remaining_indices, actions):
+                obs, rewards, dones, truncated, _ = envs[i].step(action)
+                if truncated or dones:
+                    obs_list[i], _ = envs[i].reset()
+                    scores[i] = rewards
+                else:
+                    obs_list[i] = obs
+                    new_remaining_indices.append(i) 
+
+            remaining_indices = new_remaining_indices
+
+        return scores
 
 
 if __name__ == "__main__":
-    from connect_four_gymnasium.players import (MinMaxPlayer)
+    from connect_four_gymnasium.players import (TeenagerSmarterPlayer)
 
     elo_leaderboard = EloLeaderboard()
-    print(elo_leaderboard.get_elo([MinMaxPlayer(depth=1)], num_matches=100))
-
-# 1. AdultSmarterPlayer:    1767
-# 2. AdultPlayer:           1712
-# 3. MinimaxPlayer depth 3: 1672
-# 4. MinimaxPlayer depth 2: 1622
-# 5. TeenagerSmarterPlayer: 1611
-# 6. TeenagerPlayer:        1604
-# 7. ChildSmarterPlayer:    1525
-# 8. MinimaxPlayer depth 1: 1220
-# 9. ChildPlayer:           1208
-# 10. BabyPlayer:            995
+    print(elo_leaderboard.get_elo([TeenagerSmarterPlayer()], num_matches=100))

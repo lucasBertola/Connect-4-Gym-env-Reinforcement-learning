@@ -6,7 +6,6 @@ from .TeenagerSmarterPlayer import TeenagerSmarterPlayer
 from .AdultPlayer import AdultPlayer
 from .AdultSmarterPlayer import AdultSmarterPlayer
 
-from .MinMaxPlayer import MinMaxPlayer
 
 from .ModelPlayer import ModelPlayer
 from .ConsolePlayer import ConsolePlayer

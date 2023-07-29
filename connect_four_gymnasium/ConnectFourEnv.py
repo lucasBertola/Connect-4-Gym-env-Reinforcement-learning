@@ -49,8 +49,8 @@ class ConnectFourEnv(gymnasium.Env):
         if self.opponent is not None:
             if self.next_player_to_play == 2:
                 opponent_action = self.opponent.play(self._board)
-                result = self.play_action(opponent_action, self.next_player_to_play)
-                if result != 0:
+                result, isFinish = self.play_action(opponent_action, self.next_player_to_play)
+                if isFinish :
                     print('wtf')
                     print(opponent_action)
                     exit("The opponent played an invalid action in the first move!")
@@ -72,7 +72,7 @@ class ConnectFourEnv(gymnasium.Env):
 
     def play_action(self, action, player):
         if not self.is_action_valid(action):
-            return -1
+            return -1, True
 
         last_move_row = self.drop_piece(action, player)
 
@@ -82,12 +82,12 @@ class ConnectFourEnv(gymnasium.Env):
             if self.render_mode == "human":
                 print("You won!")
                 time.sleep(5)
-            return 1
+            return 1, True
         
         if self.board_is_full():
-            return 0
+            return 0, True
 
-        return 0
+        return 0, False
 
     def board_is_full(self):
         return np.all(self._board != 0)
@@ -104,9 +104,10 @@ class ConnectFourEnv(gymnasium.Env):
     def step(self, action, play_opponent=True):
         action = action.item() if isinstance(action, np.ndarray) else action
 
-        result = self.play_action(action, self.next_player_to_play)
-        if result != 0:
+        result, is_finish = self.play_action(action, self.next_player_to_play)
+        if is_finish:
             return self._board, result, True, False, {}
+        
         self.switch_player()
 
         if  play_opponent and self.opponent is not None:
