@@ -64,25 +64,8 @@ One powerful technique for training AI models is self-play, where the AI learns 
 - **Continuous improvement**: As the AI model improves, it continually faces a stronger opponent (itself), which helps it to learn more advanced strategies and refine its gameplay.
 - **Adaptive learning**: The AI model can adapt to its own weaknesses and exploit them, leading to a more robust and well-rounded understanding of the game.
 
-Here's an example of how to set up self-play training:
+You can directly test self-play training in the provided [Colab Notebook](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/Self_play_training.ipynb).
 
-```python
-from connect_four_gymnasium import ConnectFourEnv, ModelPlayer
-from stable_baselines3 import PPO
-
-env = ConnectFourEnv(opponent=BabyPlayer())
-model = PPO("MlpPolicy", env, verbose=1)
-opponent = ModelPlayer(model, name="yourself")
-env.change_opponent(opponent)
-
-model.learn(total_timesteps=10000)
-```
-
-In this example, , we create a `ModelPlayer` using the model and set it as the opponent for the environment. This allows the AI model to continue learning by playing against itself.
-
-You can directly test self-play training in the provided Google Colab notebook at the following link:
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/Self_play_training.ipynb)
 
 ## Environment Details
 
