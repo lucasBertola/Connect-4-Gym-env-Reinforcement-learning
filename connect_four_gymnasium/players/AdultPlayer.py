@@ -19,8 +19,8 @@ class AdultPlayer(Player):
         # Check for a winning move for the opponent
         for move in range(7):
             if observation[0, move] == 0:
-                new_board, row, col = self.apply_move(observation, move, 2)
-                if self.check_win_around_last_move(new_board, 2, row, col):
+                new_board, row, col = self.apply_move(observation, move, -1)
+                if self.check_win_around_last_move(new_board, -1, row, col):
                     return move
 
         # Check if a move allows the opponent to win by playing the same move again
@@ -28,8 +28,8 @@ class AdultPlayer(Player):
             if observation[0, move] == 0:
                 new_board, row, col = self.apply_move(observation, move, 1)
                 if new_board[0, move] == 0:
-                    new_board, row, col = self.apply_move(new_board, move, 2)
-                    if self.check_win_around_last_move(new_board, 2, row, col):
+                    new_board, row, col = self.apply_move(new_board, move, -1)
+                    if self.check_win_around_last_move(new_board, -1, row, col):
                         moves_to_avoid.append(move)
 
         # Check if a move creates a line of three tokens with available spaces on both sides
@@ -41,8 +41,8 @@ class AdultPlayer(Player):
         
         for move in range(7):
             if observation[0, move] == 0:
-                new_board, row, col = self.apply_move(observation, move, 2)
-                if self.check_three_in_a_row(new_board, 2, row, col) and move not in moves_to_avoid:
+                new_board, row, col = self.apply_move(observation, move, -1)
+                if self.check_three_in_a_row(new_board, -1, row, col) and move not in moves_to_avoid:
                     return move
 
         # Play a random move among valid moves, excluding moves_to_avoid

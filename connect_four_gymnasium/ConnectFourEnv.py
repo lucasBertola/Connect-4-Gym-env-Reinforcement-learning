@@ -25,12 +25,12 @@ class ConnectFourEnv(gymnasium.Env):
         # Define the action and observation spaces
         self.action_space = spaces.Discrete(self.COLUMNS_COUNT)
 
-        # 1 is you, 2 is the opponent
-        self.observation_space = spaces.Box(low=0, high=2, shape=(self.ROWS_COUNT, self.COLUMNS_COUNT), dtype=np.int32)
+        # 1 is you, -1 is the opponent
+        self.observation_space = spaces.Box(low=-1, high=1, shape=(self.ROWS_COUNT, self.COLUMNS_COUNT), dtype=np.int32)
 
         # Check if the render mode is valid
         assert render_mode is None or render_mode in self.metadata["render_modes"]
-        assert first_player is None or first_player in [1, 2]
+        assert first_player is None or first_player in [1, -1]
         self.render_mode = render_mode
         self.last_render_time = None
         self.window = None
@@ -42,12 +42,12 @@ class ConnectFourEnv(gymnasium.Env):
         self.render_for_human()
 
         if self.first_player is None:
-            self.next_player_to_play = np.random.choice([1, 2])
+            self.next_player_to_play = np.random.choice([1, -1])
         else:
             self.next_player_to_play = self.first_player
 
         if self.opponent is not None:
-            if self.next_player_to_play == 2:
+            if self.next_player_to_play == -1:
                 opponent_action = self.opponent.play(self._board)
                 result, isFinish = self.play_action(opponent_action, self.next_player_to_play)
                 if isFinish :
@@ -93,13 +93,10 @@ class ConnectFourEnv(gymnasium.Env):
         return np.all(self._board != 0)
     
     def inverse_player_position(self):
-        new_board = np.zeros_like(self._board)
-        new_board[self._board == 1] = 2
-        new_board[self._board == 2] = 1
-        return new_board
+        return -self._board
 
     def switch_player(self):
-        self.next_player_to_play = 3 - self.next_player_to_play
+        self.next_player_to_play = -1*self.next_player_to_play
         
     def step(self, action, play_opponent=True):
         action = action.item() if isinstance(action, np.ndarray) else action
@@ -111,7 +108,7 @@ class ConnectFourEnv(gymnasium.Env):
         self.switch_player()
 
         if  play_opponent and self.opponent is not None:
-            # because 1 is you, 2 is the opponent
+            # because 1 is you, -1 is the opponent
             # you need to see the board as the opponent sees it
             opponent_action = self.opponent.play(self.inverse_player_position())
             opponent_result = self.step(opponent_action, play_opponent=False)
@@ -196,7 +193,7 @@ class ConnectFourEnv(gymnasium.Env):
                 color = (245, 245, 245)
                 if self._board[i, j] == 1:
                     color = self.player_1_color
-                elif self._board[i, j] == 2:
+                elif self._board[i, j] == -1:
                     color = self.player_2_color
                 pygame.draw.circle(canvas, color, (j_position + circle_radius, i_position + circle_radius), circle_radius)
                 j_position += (circle_radius * 2) + padding_center

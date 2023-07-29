@@ -17,8 +17,8 @@ class ChildSmarterPlayer(Player):
         # Check if there is a winning move for the opponent
         for move in range(7):
             if observation[0, move] == 0:
-                new_board, row, col = self.apply_move(observation, move, 2)
-                if self.check_win_around_last_move(new_board, 2, row, col):
+                new_board, row, col = self.apply_move(observation, move, -1)
+                if self.check_win_around_last_move(new_board, -1, row, col):
                     return move
 
         # Play a random move

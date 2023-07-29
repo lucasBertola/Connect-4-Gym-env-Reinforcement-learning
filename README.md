@@ -81,7 +81,7 @@ self.action_space = spaces.Discrete(self.COLUMNS_COUNT)
 
 ### Observation Space
 
-The observation space in the Connect Four environment is a 2D array representing the game board. Each cell in the array can have one of three possible values: 0 (empty), 1 (player's piece), or 2 (opponent's piece). The observation space is defined as follows:
+The observation space in the Connect Four environment is a 2D array representing the game board. Each cell in the array can have one of three possible values: 0 (empty), 1 (player's piece), or -1 (opponent's piece). The observation space is defined as follows:
 
 ```python
 self.observation_space = spaces.Box(low=0, high=2, shape=(self.ROWS_COUNT, self.COLUMNS_COUNT), dtype=np.int32)

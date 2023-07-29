@@ -22,21 +22,21 @@ def test_place_a_simple_move():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 0, 0, 0]
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0, -1, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 1, 0, 0, 0]
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [-1, 0, 0, 1, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -58,21 +58,21 @@ def test_place_a_simple_game_horizontal_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 0, 0, 0, 0]
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [-1, 0, 0, 0, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0, 0, 0]
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [-1, 0, 0, 0, 0, 0, 0],
+        [ 1, 0, 0, 0, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -87,21 +87,21 @@ def test_place_a_simple_game_horizontal_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0, 0, 0],
-        [2, 2, 0, 0, 0, 0, 0]
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 1,  0, 0, 0, 0, 0, 0],
+        [-1, -1, 0, 0, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 2, 0, 0, 0, 0, 0],
-        [1, 1, 0, 0, 0, 0, 0]
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [-1, -1, 0, 0, 0, 0, 0],
+        [ 1,  1, 0, 0, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -116,21 +116,21 @@ def test_place_a_simple_game_horizontal_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [1, 1, 0, 0, 0, 0, 0],
-        [2, 2, 2, 0, 0, 0, 0]
+        [ 0,  0,  0, 0, 0, 0, 0],
+        [ 0,  0,  0, 0, 0, 0, 0],
+        [ 0,  0,  0, 0, 0, 0, 0],
+        [ 0,  0,  0, 0, 0, 0, 0],
+        [ 1,  1,  0, 0, 0, 0, 0],
+        [-1, -1, -1, 0, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 2, 0, 0, 0, 0, 0],
-        [2, 2, 0, 0, 0, 0, 0],
-        [1, 1, 1, 0, 0, 0, 0]
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0, -1, 0, 0, 0, 0, 0],
+        [-1, -1, 0, 0, 0, 0, 0],
+        [ 1,  1, 1, 0, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -145,21 +145,21 @@ def test_place_a_simple_game_horizontal_win():
     assert dones == True, f"Expected dones: True but got {dones}"
     
     expected_opponant_view = np.array([ # he doesn't view your move because you win before
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [1, 1, 0, 0, 0, 0, 0],
-        [2, 2, 2, 0, 0, 0, 0]
+        [ 0,  0,  0, 0, 0, 0, 0],
+        [ 0,  0,  0, 0, 0, 0, 0],
+        [ 0,  0,  0, 0, 0, 0, 0],
+        [ 0,  0,  0, 0, 0, 0, 0],
+        [ 1,  1,  0, 0, 0, 0, 0],
+        [-1, -1, -1, 0, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 2, 0, 0, 0, 0, 0],
-        [2, 2, 0, 0, 0, 0, 0],
-        [1, 1, 1, 1, 0, 0, 0]
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0, -1, 0, 0, 0, 0, 0],
+        [-1, -1, 0, 0, 0, 0, 0],
+        [ 1,  1, 1, 1, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -179,21 +179,21 @@ def test_place_a_simple_game_vertical_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 2, 0, 0, 0, 0, 0]
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0, -1, 0, 0, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 2, 0, 0, 0]
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 1, 0, -1, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -208,21 +208,21 @@ def test_place_a_simple_game_vertical_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 2, 0, 0, 0, 0, 0],
-        [0, 2, 0, 1, 0, 0, 0]
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0, -1, 0, 0, 0, 0, 0],
+        [0, -1, 0, 1, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 2, 0, 0, 2]
+        [0, 0, 0,  0, 0, 0,  0],
+        [0, 0, 0,  0, 0, 0,  0],
+        [0, 0, 0,  0, 0, 0,  0],
+        [0, 0, 0,  0, 0, 0,  0],
+        [0, 1, 0,  0, 0, 0,  0],
+        [0, 1, 0, -1, 0, 0, -1]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -237,21 +237,21 @@ def test_place_a_simple_game_vertical_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 2, 0, 0, 0, 0, 0],
-        [0, 2, 0, 0, 0, 0, 0],
-        [0, 2, 0, 1, 0, 0, 1]
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0, -1, 0, 0, 0, 0, 0],
+        [0, -1, 0, 0, 0, 0, 0],
+        [0, -1, 0, 1, 0, 0, 1]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 2, 0, 2, 2]
+        [0, 0, 0,  0, 0,  0,  0],
+        [0, 0, 0,  0, 0,  0,  0],
+        [0, 0, 0,  0, 0,  0,  0],
+        [0, 1, 0,  0, 0,  0,  0],
+        [0, 1, 0,  0, 0,  0,  0],
+        [0, 1, 0, -1, 0, -1, -1]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -266,12 +266,12 @@ def test_place_a_simple_game_vertical_win():
     assert dones == True, f"Expected dones: True but got {dones}"
         
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0],
-        [0, 1, 0, 2, 0, 2, 2]
+        [0, 0, 0,  0, 0,  0,  0],
+        [0, 0, 0,  0, 0,  0,  0],
+        [0, 1, 0,  0, 0,  0,  0],
+        [0, 1, 0,  0, 0,  0,  0],
+        [0, 1, 0,  0, 0,  0,  0],
+        [0, 1, 0, -1, 0, -1, -1]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -292,21 +292,21 @@ def test_place_a_simple_game_updiagonal_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 0, 0, 0, 0]
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [-1, 0, 0, 0, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [1, 2, 0, 0, 0, 0, 0]
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [0,  0, 0, 0, 0, 0, 0],
+        [1, -1, 0, 0, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -321,21 +321,21 @@ def test_place_a_simple_game_updiagonal_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 2, 0, 0, 0, 0, 0],
-        [2, 1, 0, 0, 0, 0, 0]
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0,  0, 0, 0, 0, 0, 0],
+        [ 0, -1, 0, 0, 0, 0, 0],
+        [-1,  1, 0, 0, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0],
-        [1, 2, 2, 0, 0, 0, 0]
+        [0,  0,  0, 0, 0, 0, 0],
+        [0,  0,  0, 0, 0, 0, 0],
+        [0,  0,  0, 0, 0, 0, 0],
+        [0,  0,  0, 0, 0, 0, 0],
+        [0,  1,  0, 0, 0, 0, 0],
+        [1, -1, -1, 0, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -350,21 +350,21 @@ def test_place_a_simple_game_updiagonal_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 2, 0, 0, 0, 0, 0],
-        [2, 1, 1, 2, 0, 0, 0]
+        [ 0,  0, 0,  0, 0, 0, 0],
+        [ 0,  0, 0,  0, 0, 0, 0],
+        [ 0,  0, 0,  0, 0, 0, 0],
+        [ 0,  0, 0,  0, 0, 0, 0],
+        [ 0, -1, 0,  0, 0, 0, 0],
+        [-1,  1, 1, -1, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 2, 0, 0, 0, 0],
-        [1, 2, 2, 1, 0, 0, 0]
+        [0,  0,  0, 0, 0, 0, 0],
+        [0,  0,  0, 0, 0, 0, 0],
+        [0,  0,  0, 0, 0, 0, 0],
+        [0,  0,  0, 0, 0, 0, 0],
+        [0,  1, -1, 0, 0, 0, 0],
+        [1, -1, -1, 1, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -379,21 +379,21 @@ def test_place_a_simple_game_updiagonal_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 0, 0, 0, 0],
-        [0, 2, 1, 0, 0, 0, 0],
-        [2, 1, 1, 2, 0, 0, 0]
+        [ 0,  0,  0,  0, 0, 0, 0],
+        [ 0,  0,  0,  0, 0, 0, 0],
+        [ 0,  0,  0,  0, 0, 0, 0],
+        [ 0,  0, -1,  0, 0, 0, 0],
+        [ 0, -1,  1,  0, 0, 0, 0],
+        [-1,  1,  1, -1, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0],
-        [0, 1, 2, 2, 0, 0, 0],
-        [1, 2, 2, 1, 0, 0, 0]
+        [0,  0,  0,  0, 0, 0, 0],
+        [0,  0,  0,  0, 0, 0, 0],
+        [0,  0,  0,  0, 0, 0, 0],
+        [0,  0,  1,  0, 0, 0, 0],
+        [0,  1, -1, -1, 0, 0, 0],
+        [1, -1, -1,  1, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -408,21 +408,21 @@ def test_place_a_simple_game_updiagonal_win():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 0, 0, 0, 0],
-        [0, 0, 2, 0, 0, 0, 0],
-        [0, 2, 1, 1, 0, 0, 0],
-        [2, 1, 1, 2, 0, 0, 0]
+        [ 0,  0,  0,  0, 0, 0, 0],
+        [ 0,  0,  0,  0, 0, 0, 0],
+        [ 0,  0, -1,  0, 0, 0, 0],
+        [ 0,  0, -1,  0, 0, 0, 0],
+        [ 0, -1,  1,  1, 0, 0, 0],
+        [-1,  1,  1, -1, 0, 0, 0]
     ])
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 1, 2, 0, 0, 0],
-        [0, 1, 2, 2, 0, 0, 0],
-        [1, 2, 2, 1, 0, 0, 0]
+        [0,  0,  0,  0, 0, 0, 0],
+        [0,  0,  0,  0, 0, 0, 0],
+        [0,  0,  1,  0, 0, 0, 0],
+        [0,  0,  1, -1, 0, 0, 0],
+        [0,  1, -1, -1, 0, 0, 0],
+        [1, -1, -1,  1, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -437,12 +437,12 @@ def test_place_a_simple_game_updiagonal_win():
     assert dones == True, f"Expected dones: True but got {dones}"
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 1, 0, 0, 0],
-        [0, 0, 1, 2, 0, 0, 0],
-        [0, 1, 2, 2, 0, 0, 0],
-        [1, 2, 2, 1, 0, 0, 0]
+        [0,  0,  0,  0, 0, 0, 0],
+        [0,  0,  0,  0, 0, 0, 0],
+        [0,  0,  1,  1, 0, 0, 0],
+        [0,  0,  1, -1, 0, 0, 0],
+        [0,  1, -1, -1, 0, 0, 0],
+        [1, -1, -1,  1, 0, 0, 0]
     ])
     
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -477,12 +477,12 @@ def test_place_a_simple_game_downdiagonal_win():
     board, rewards, dones, truncated, info = env.step(nextAction)
 
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 1, 1, 0, 0, 0],
-        [0, 0, 2, 2, 1, 0, 0],
-        [0, 2, 1, 2, 2, 1, 0]
+        [0,  0,  0,  0,  0, 0, 0],
+        [0,  0,  0,  0,  0, 0, 0],
+        [0,  0,  1,  0,  0, 0, 0],
+        [0,  0,  1,  1,  0, 0, 0],
+        [0,  0, -1, -1,  1, 0, 0],
+        [0, -1,  1, -1, -1, 1, 0]
     ])
 
     assert np.array_equal(board, expected_model_view), f"Expected board:\n{expected_model_view}\nbut got:\n{board}"
@@ -495,7 +495,7 @@ def test_second_player_can_begin():
     simulatePlayer = SimulatePlayer()
 
 
-    env = ConnectFourEnv(opponent=simulatePlayer,first_player=2)
+    env = ConnectFourEnv(opponent=simulatePlayer,first_player=-1)
     simulatePlayer.set_next_move(0)
     board, _ = env.reset(seed=0)
     
@@ -509,12 +509,12 @@ def test_second_player_can_begin():
     ])
 
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 0, 0, 0, 0]
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [-1, 0, 0, 0, 0, 0, 0]
     ])
 
     assert np.array_equal(simulatePlayer.lastBoardView, expected_opponant_view), f"expected_opponant_view:\n{expected_opponant_view}\nbut got:\n{simulatePlayer.lastBoardView}"
@@ -529,21 +529,21 @@ def test_second_player_can_begin():
     assert dones == False, f"Expected dones: False but got {dones}"
 
     expected_opponant_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 2, 0, 0, 0]
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [1, 0, 0, -1, 0, 0, 0]
     ])
 
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 1, 2, 0, 0]
+        [ 0, 0, 0, 0,  0, 0, 0],
+        [ 0, 0, 0, 0,  0, 0, 0],
+        [ 0, 0, 0, 0,  0, 0, 0],
+        [ 0, 0, 0, 0,  0, 0, 0],
+        [ 0, 0, 0, 0,  0, 0, 0],
+        [-1, 0, 0, 1, -1, 0, 0]
     ])
 
     

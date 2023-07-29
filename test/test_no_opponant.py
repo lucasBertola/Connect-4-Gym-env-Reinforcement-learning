@@ -23,7 +23,7 @@ def test_simple_moves_no_opponent():
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 0, 0, 0]
+        [0, 0, 0, -1, 0, 0, 0]
     ])
     
     assert np.array_equal(board, expected_model_view), f"Expected board:\n{expected_model_view}\nbut got:\n{board}"
@@ -36,12 +36,12 @@ def test_simple_moves_no_opponent():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 1, 0, 0, 0]
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [-1, 0, 0, 1, 0, 0, 0]
     ])
     
     assert np.array_equal(board, expected_model_view), f"Expected board:\n{expected_model_view}\nbut got:\n{board}"
@@ -54,12 +54,12 @@ def test_simple_moves_no_opponent():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 0, 0, 0],
-        [1, 0, 0, 2, 0, 0, 0]
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0, -1, 0, 0, 0],
+        [1, 0, 0, -1, 0, 0, 0]
     ])
     
     assert np.array_equal(board, expected_model_view), f"Expected board:\n{expected_model_view}\nbut got:\n{board}"
@@ -72,12 +72,12 @@ def test_simple_moves_no_opponent():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 1, 0, 0, 0],
-        [2, 0, 0, 1, 0, 0, 0]
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [-1, 0, 0, 1, 0, 0, 0],
+        [-1, 0, 0, 1, 0, 0, 0]
     ])
     
     assert np.array_equal(board, expected_model_view), f"Expected board:\n{expected_model_view}\nbut got:\n{board}"
@@ -90,12 +90,12 @@ def test_simple_moves_no_opponent():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 2, 0, 0, 0],
-        [1, 0, 0, 2, 0, 0, 0],
-        [1, 0, 0, 2, 0, 0, 0]
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0,  0, 0, 0, 0],
+        [0, 0, 0, -1, 0, 0, 0],
+        [1, 0, 0, -1, 0, 0, 0],
+        [1, 0, 0, -1, 0, 0, 0]
     ])
     
     assert np.array_equal(board, expected_model_view), f"Expected board:\n{expected_model_view}\nbut got:\n{board}"
@@ -108,12 +108,12 @@ def test_simple_moves_no_opponent():
     assert dones == False, f"Expected dones: False but got {dones}"
     
     expected_model_view = np.array([
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [2, 0, 0, 1, 0, 0, 0],
-        [2, 0, 0, 1, 0, 0, 0],
-        [2, 0, 0, 1, 0, 0, 0]
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ 0, 0, 0, 0, 0, 0, 0],
+        [ -1, 0, 0, 1, 0, 0, 0],
+        [ -1, 0, 0, 1, 0, 0, 0],
+        [ -1, 0, 0, 1, 0, 0, 0]
     ])
     
     assert np.array_equal(board, expected_model_view), f"Expected board:\n{expected_model_view}\nbut got:\n{board}"

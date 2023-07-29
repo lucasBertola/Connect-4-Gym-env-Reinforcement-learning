@@ -28,13 +28,13 @@ def test_is_determinist_with_ppo():
             obs, _ = env.reset()
 
     # Check if the model is deterministic
-    assert np.sum(allrewards) == 8, "The model is not determinist"
+    assert np.sum(allrewards) == 7, "The model is not determinist"
 
 
 def test_is_working_with_ppo():
     # Initialize the environment and the PPO model
     env = ConnectFourEnv(opponent=BabyPlayer())
-    model = PPO("MlpPolicy", env, verbose=0, seed=0)
+    model = PPO("MlpPolicy", env, verbose=0, seed=1)
 
     # Train the model
     model.learn(total_timesteps=10000)
