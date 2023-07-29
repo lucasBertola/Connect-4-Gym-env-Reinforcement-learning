@@ -143,11 +143,11 @@ Here are the Elo ratings of the different algorithms:
 ```
 1.  AdultSmarterPlayer:    1790
 2.  AdultPlayer:           1654
-5.  TeenagerSmarterPlayer: 1647
-6.  TeenagerPlayer:        1639
-7.  ChildSmarterPlayer:    1571
-9.  ChildPlayer:           1222
-10. BabyPlayer:            1000
+3.  TeenagerSmarterPlayer: 1647
+4.  TeenagerPlayer:        1639
+5.  ChildSmarterPlayer:    1571
+6.  ChildPlayer:           1222
+7.  BabyPlayer:            1000
 ```
 
 In addition to the provided players, we also offer a tool to evaluate the Elo rating of your own AI model. This is extremely useful to have an "absolute" idea of the progress of your AI. For example, if an AI learns by fighting against itself, we know that it is getting stronger as it would be able to win against its older versions, but this is not enough to evaluate if it has learned a lot. This is where our tool comes in, which allows you to give an Elo rating to the AI.
