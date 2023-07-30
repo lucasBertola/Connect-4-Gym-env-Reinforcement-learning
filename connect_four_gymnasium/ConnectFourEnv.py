@@ -124,10 +124,8 @@ class ConnectFourEnv(gymnasium.Env):
 
         if is_finish:
             return self.board, result, True, False, {}
-        print('on veut jouer',action)
-        print('on inverse')
+
         self.switch_player()
-        print(self.board)
 
         if  play_opponent and self._opponent is not None:
             opponent_action = self._opponent.play(self.board)
@@ -240,7 +238,7 @@ class ConnectFourEnv(gymnasium.Env):
         else:
             return np.transpose(pygame.surfarray.array3d(canvas), (1, 0, 2))
         
-        def close(self):
-            if self.window is not None:
-                pygame.display.quit()
-                pygame.quit()
+    def close(self):
+        if self.window is not None:
+            pygame.display.quit()
+            pygame.quit()
