@@ -110,6 +110,7 @@ class ConnectFourEnv(gymnasium.Env):
     def clone(self):
         new_env = ConnectFourEnv(opponent=self._opponent, render_mode=self.render_mode, first_player=self.first_player)
         new_env.next_player_to_play = self.next_player_to_play
+        new_env.board = self.board.copy()
         return new_env
 
     def clone_and_play(self, action):
