@@ -164,7 +164,7 @@ model.learn(total_timesteps=10000)
 
 myModelPlayer = ModelPlayer(model,name="Your trained Model")
 
-your_model_elo = EloLeaderboard().get_elo([myModelPlayer], num_matches=100)
+your_model_elo = EloLeaderboard().get_elo(myModelPlayer)
 ```
 
 You can find an example of how to use this tool in a Google Colab notebook [here](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/Train_ppo_and_test.ipynb).

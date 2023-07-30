@@ -1,7 +1,6 @@
 import math
 import sys
 import random
-import time
 sys.path.append('../../')
 
 from connect_four_gymnasium.ConnectFourEnv import ConnectFourEnv
@@ -59,7 +58,6 @@ class EloLeaderboard:
                 match_results.append((player_won, draw, opponent.getElo()))
                 k_factor = 400 / (1 + (gamePlayed))
                 actualElo = self.update_elo(actualElo, opponent.getElo(), player_won, k_factor, draw)
-                print(f"{player.getName()} vs {opponent.getName()}: {score} - {actualElo}")
                 gamePlayed += 1
 
         for _ in range(2000):
@@ -70,7 +68,7 @@ class EloLeaderboard:
 
         return actualElo
 
-    def get_elo(self, player, num_matches=400):
+    def get_elo(self, player, num_matches=100):
         actualElo = player.getElo() if player.getElo() is not None else 1400
         actualElo = 1400
         return self.play_rounds(player, actualElo, num_matches)
@@ -100,7 +98,7 @@ class EloLeaderboard:
 
 
 if __name__ == "__main__":
-
+    import time
     elo_leaderboard = EloLeaderboard()
     start_time = time.time()
     print(elo_leaderboard.get_elo(BabySmarterPlayer(), num_matches=20))
