@@ -18,10 +18,10 @@ class ConnectFourEnv(gymnasium.Env):
     INVALID_opponent = 0
 
     def change_opponent(self, opponent):
-        self.opponent = opponent
+        self._opponent = opponent
 
     def __init__(self, opponent=None, render_mode=None, first_player=None):
-        self.opponent = opponent  # Define the opponent
+        self._opponent = opponent  # Define the opponent
         # Define the action and observation spaces
         self.action_space = spaces.Discrete(self.COLUMNS_COUNT)
 
@@ -38,45 +38,45 @@ class ConnectFourEnv(gymnasium.Env):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
-        self._board = np.zeros((self.ROWS_COUNT, self.COLUMNS_COUNT))
-        self.render_for_human()
+        self.board = np.zeros((self.ROWS_COUNT, self.COLUMNS_COUNT))
+        self._render_for_human()
 
         if self.first_player is None:
             self.next_player_to_play = np.random.choice([1, -1])
         else:
             self.next_player_to_play = self.first_player
 
-        if self.opponent is not None:
+        if self._opponent is not None:
             if self.next_player_to_play == -1:
-                opponent_action = self.opponent.play(self._board)
-                result, isFinish = self.play_action(opponent_action, self.next_player_to_play)
+                opponent_action = self._opponent.play(self.board)
+                result, isFinish = self._play_action(opponent_action, self.next_player_to_play)
                 if isFinish :
                     print('wtf')
                     print(opponent_action)
                     exit("The opponent played an invalid action in the first move!")
                 self.next_player_to_play = 1
 
-            self.render_for_human()
+            self._render_for_human()
 
-        return self._board, {}
+        return self.board, {}
 
-    def render_for_human(self):
+    def _render_for_human(self):
         if self.render_mode == "human":
             self._render_frame()
 
     def is_column_full(self, column):
-        return self._board[0, column] != 0
+        return self.board[0, column] != 0
 
     def is_action_valid(self, action):
         return action >= self.MIN_INDEX_TO_PLAY and action < self.COLUMNS_COUNT and not self.is_column_full(action)
 
-    def play_action(self, action, player):
+    def _play_action(self, action, player):
         if not self.is_action_valid(action):
             return -1, True
 
-        last_move_row = self.drop_piece(action, player)
+        last_move_row = self._drop_piece(action, player)
 
-        self.render_for_human()
+        self._render_for_human()
 
         if self.check_win_around_last_move(player, last_move_row, action):
             if self.render_mode == "human":
@@ -90,39 +90,56 @@ class ConnectFourEnv(gymnasium.Env):
         return 0, False
 
     def board_is_full(self):
-        return np.all(self._board != 0)
+        return np.all(self.board != 0)
     
     def inverse_player_position(self):
-        return -self._board
+        self.board = -self.board
 
     def switch_player(self):
         self.next_player_to_play = -1*self.next_player_to_play
-        
+        #because 1 is you and -1 is the opponent
+        self.inverse_player_position()
+    
+    def get_valid_actions(self):
+        valid_actions = []
+        for col in range(self.COLUMNS_COUNT):
+            if not self.is_column_full(col):
+                valid_actions.append(col)
+        return valid_actions
+    
+    def clone(self):
+        new_env = ConnectFourEnv(opponent=self._opponent, render_mode=self.render_mode, first_player=self.first_player)
+        new_env.next_player_to_play = self.next_player_to_play
+        return new_env
+
+    def clone_and_play(self, action):
+        newself = self.clone()
+        newBoard, result, IsFinish, isTruncated = newself.step(action)
+        return newBoard, result, IsFinish, isTruncated, newself
+
     def step(self, action, play_opponent=True):
         action = action.item() if isinstance(action, np.ndarray) else action
 
-        result, is_finish = self.play_action(action, self.next_player_to_play)
+        result, is_finish = self._play_action(action, 1)
+
         if is_finish:
-            return self._board, result, True, False, {}
-        
+            return self.board, result, True, False, {}
+        print('on veut jouer',action)
+        print('on inverse')
         self.switch_player()
+        print(self.board)
 
-        if  play_opponent and self.opponent is not None:
-            # because 1 is you, -1 is the opponent
-            # you need to see the board as the opponent sees it
-            opponent_action = self.opponent.play(self.inverse_player_position())
+        if  play_opponent and self._opponent is not None:
+            opponent_action = self._opponent.play(self.board)
             opponent_result = self.step(opponent_action, play_opponent=False)
-            return opponent_result[0],-1* opponent_result[1], opponent_result[2], opponent_result[3], opponent_result[4]
-        elif self.opponent is None:
-            boardToReturn = self._board if self.next_player_to_play == 1 else self.inverse_player_position()
-            return boardToReturn, 0, False, False, {}
+            return self.board,-1* opponent_result[1], opponent_result[2], opponent_result[3], opponent_result[4]
             
-        return self._board, 0, False, False, {}
+        return self.board, 0, False, False, {}
 
-    def drop_piece(self, action, player):
+    def _drop_piece(self, action, player):
         for i in range(self.ROWS_COUNT - 1, -1, -1):
-            if self._board[i, action] == 0:
-                self._board[i, action] = player
+            if self.board[i, action] == 0:
+                self.board[i, action] = player
                 return i
         print('wtf', self.is_action_valid(action))
         exit("Someone played an invalid action!")
@@ -139,7 +156,7 @@ class ConnectFourEnv(gymnasium.Env):
             count = 0
             for step in range(-3, 4):
                 r, c = row + step * dr, col + step * dc
-                if 0 <= r < self.ROWS_COUNT and 0 <= c < self.COLUMNS_COUNT and self._board[r, c] == player:
+                if 0 <= r < self.ROWS_COUNT and 0 <= c < self.COLUMNS_COUNT and self.board[r, c] == player:
                     count += 1
                     if count == 4:
                         return True
@@ -152,7 +169,7 @@ class ConnectFourEnv(gymnasium.Env):
         if self.render_mode == "rgb_array":
             return self._render_frame()
 
-    def wait_for_render(self):
+    def _wait_for_render(self):
         current_time = time.time()
         time_to_wait = 1 / self.FPS
         if self.last_render_time is not None and current_time - self.last_render_time < time_to_wait:
@@ -172,7 +189,7 @@ class ConnectFourEnv(gymnasium.Env):
         pygame.font.init()
         # if render GUI, we want to limit the frame rate to X FPS for better visualization
         if self.render_mode == "human":
-            self.wait_for_render()
+            self._wait_for_render()
 
         if self.window is None and self.render_mode == "human":
             pygame.init()
@@ -191,9 +208,9 @@ class ConnectFourEnv(gymnasium.Env):
             j_position = padding
             for j in range(self.COLUMNS_COUNT):
                 color = (245, 245, 245)
-                if self._board[i, j] == 1:
+                if self.board[i, j] == 1:
                     color = self.player_1_color
-                elif self._board[i, j] == -1:
+                elif self.board[i, j] == -1:
                     color = self.player_2_color
                 pygame.draw.circle(canvas, color, (j_position + circle_radius, i_position + circle_radius), circle_radius)
                 j_position += (circle_radius * 2) + padding_center
@@ -204,7 +221,7 @@ class ConnectFourEnv(gymnasium.Env):
         pygame.draw.circle(canvas, self.player_2_color, (50, text_position_y_first_player + circle_radius / 4),
                            circle_radius / 2)
         font = pygame.font.Font(None, 36)
-        opponent_name = self.opponent.getName()
+        opponent_name = self._opponent.getName()
         text = font.render(f"{opponent_name}", 1, (10, 10, 10))
 
         canvas.blit(text, (80, text_position_y_first_player))
