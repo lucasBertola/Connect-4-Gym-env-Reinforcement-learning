@@ -110,7 +110,7 @@ class AdultSmarterPlayer(Player):
         return "AdultSmarterPlayer"
     
     def getElo(self):
-        return 1790
+        return 1802
     
     def isDeterministic(self):
         return False

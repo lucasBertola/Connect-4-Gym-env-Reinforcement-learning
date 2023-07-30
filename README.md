@@ -122,7 +122,9 @@ env = ConnectFourEnv(opponent=BabyPlayer())
 
 - **BabyPlayer**: Plays random moves.
 
-- **ChildPlayer**: Plays random moves, but if there is a winning move, it will play it.
+- **BabySmarterPlayer**: Plays random legal moves, ensuring it doesn't play on a column when it's full.
+
+- **ChildPlayer**: Same as BabySmarterPlayer, but if there is a winning move, it will play it.
 
 - **ChildSmarterPlayer**: Same as ChildPlayer, but if there is a move that would make the opponent win, it will play that move to block the opponent.
 
@@ -141,13 +143,14 @@ env = ConnectFourEnv(opponent=BabyPlayer())
 Here are the Elo ratings of the different algorithms:
 
 ```
-1.  AdultSmarterPlayer:    1790
-2.  AdultPlayer:           1654
-3.  TeenagerSmarterPlayer: 1647
-4.  TeenagerPlayer:        1639
-5.  ChildSmarterPlayer:    1571
-6.  ChildPlayer:           1222
-7.  BabyPlayer:            1000
+1. AdultSmarterPlayer:    1802
+2. AdultPlayer:           1666
+3. TeenagerSmarterPlayer: 1658
+4. TeenagerPlayer:        1655
+5. ChildSmarterPlayer:    1571
+6. ChildPlayer:           1272
+7. BabySmarterPlayer:     1060
+8. BabyPlayer:            1000
 ```
 
 In addition to the provided players, we also offer a tool to evaluate the Elo rating of your own AI model. This is extremely useful to have an "absolute" idea of the progress of your AI. For example, if an AI learns by fighting against itself, we know that it is getting stronger as it would be able to win against its older versions, but this is not enough to evaluate if it has learned a lot. This is where our tool comes in, which allows you to give an Elo rating to the AI.

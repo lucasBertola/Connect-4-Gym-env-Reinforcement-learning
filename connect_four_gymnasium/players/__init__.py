@@ -1,4 +1,5 @@
 from .BabyPlayer import BabyPlayer
+from .BabySmarterPlayer import BabySmarterPlayer
 from .ChildPlayer import ChildPlayer
 from .ChildSmarterPlayer import ChildSmarterPlayer
 from .TeenagerPlayer import TeenagerPlayer

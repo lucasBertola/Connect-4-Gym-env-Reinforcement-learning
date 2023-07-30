@@ -6,9 +6,6 @@ class ChildPlayer(Player):
     def __init__(self, _=""):
         pass
 
-    def random_move(self):
-        return np.random.choice(range(7))
-
     def play(self, observation):
         if isinstance(observation, list):
             return [self.play_single(obs) for obs in observation]
@@ -23,13 +20,15 @@ class ChildPlayer(Player):
                 if self.check_win_around_last_move(new_board, 1, row, col):
                     return move
 
-        return self.random_move()
+        # Play a random move
+        valid_moves = [c for c in range(7) if observation[0, c] == 0]
+        return np.random.choice(valid_moves)
 
     def getName(self):
         return "ChildPlayer"
     
     def getElo(self):
-        return 1222
+        return 1272
     
     def isDeterministic(self):
         return False

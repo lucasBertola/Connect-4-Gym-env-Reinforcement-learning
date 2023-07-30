@@ -6,6 +6,7 @@ sys.path.append('../../')
 from connect_four_gymnasium.ConnectFourEnv import ConnectFourEnv
 from connect_four_gymnasium.players import (
     BabyPlayer,
+    BabySmarterPlayer,
     ChildPlayer,
     ChildSmarterPlayer,
     TeenagerPlayer,
@@ -19,12 +20,13 @@ class EloLeaderboard:
         # Initialize the list of players
         self.playersWithEloFixed = [
             BabyPlayer(),
+            BabySmarterPlayer(),
             ChildPlayer(),
             ChildSmarterPlayer(),
             TeenagerPlayer(),
             TeenagerSmarterPlayer(),
             AdultPlayer(),
-            AdultSmarterPlayer()
+            AdultSmarterPlayer(),
         ]
 
     def update_elo(self, player_elo, opponent_elo, player_won, k_factor=32, draw=False):
