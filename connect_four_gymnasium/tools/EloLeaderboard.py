@@ -1,6 +1,7 @@
 import math
 import sys
 import random
+import time
 sys.path.append('../../')
 
 from connect_four_gymnasium.ConnectFourEnv import ConnectFourEnv
@@ -40,25 +41,39 @@ class EloLeaderboard:
         # Update the player's Elo rating
         new_elo = player_elo + k_factor * (actual_outcome - expected_outcome)
         return new_elo
-    
-    def play_rounds(self, player, actualElo,num_matches):
+
+    def get_closest_opponents(self, player_elo, num_opponents=2):
+        sorted_opponents = sorted(self.playersWithEloFixed, key=lambda opponent: abs(opponent.getElo() - player_elo))
+        return sorted_opponents[:num_opponents]
+
+    def play_rounds(self, player, actualElo, num_matches):
         gamePlayed = 0
-        all_match_opponents = [player for player in self.playersWithEloFixed for _ in range(num_matches)]
-        random.shuffle(all_match_opponents)
-        scores = self.get_scores(player, all_match_opponents)
-        for opponent, score in zip(all_match_opponents, scores):
-            player_won = score > 0
-            draw = score == 0
-            opponent_elo = opponent.getElo()
-            k_factor = 400 / (1 + (gamePlayed))
-            actualElo = self.update_elo(actualElo, opponent_elo, player_won, k_factor, draw)
-            gamePlayed += 1
+        match_results = []
+        for _ in range(num_matches):
+            closest_opponents = self.get_closest_opponents(actualElo, num_opponents=2)
+            random.shuffle(closest_opponents)
+            scores = self.get_scores(player, closest_opponents)
+            for opponent, score in zip(closest_opponents, scores):
+                player_won = score > 0
+                draw = score == 0
+                match_results.append((player_won, draw, opponent.getElo()))
+                k_factor = 400 / (1 + (gamePlayed))
+                actualElo = self.update_elo(actualElo, opponent.getElo(), player_won, k_factor, draw)
+                print(f"{player.getName()} vs {opponent.getName()}: {score} - {actualElo}")
+                gamePlayed += 1
+
+        for _ in range(2000):
+            for player_won, draw, opponent_elo in match_results:
+                k_factor = 400 / (1 + (gamePlayed))
+                actualElo = self.update_elo(actualElo, opponent_elo, player_won, k_factor, draw)
+                gamePlayed += 1
 
         return actualElo
 
     def get_elo(self, player, num_matches=400):
-        actualElo = player.getElo() if player.getElo() is not None else 1500
-        return self.play_rounds(player,actualElo,num_matches)
+        actualElo = player.getElo() if player.getElo() is not None else 1400
+        actualElo = 1400
+        return self.play_rounds(player, actualElo, num_matches)
 
     def get_scores(self, player, opponents):
         envs = [ConnectFourEnv(opponent=opponent) for opponent in opponents]
@@ -77,7 +92,7 @@ class EloLeaderboard:
                     scores[i] = rewards
                 else:
                     obs_list[i] = obs
-                    new_remaining_indices.append(i) 
+                    new_remaining_indices.append(i)
 
             remaining_indices = new_remaining_indices
 
@@ -87,4 +102,7 @@ class EloLeaderboard:
 if __name__ == "__main__":
 
     elo_leaderboard = EloLeaderboard()
-    print(elo_leaderboard.get_elo(AdultSmarterPlayer(), num_matches=100))
+    start_time = time.time()
+    print(elo_leaderboard.get_elo(BabySmarterPlayer(), num_matches=20))
+    end_time = time.time()
+    print(f"Time elapsed: {end_time - start_time} seconds")

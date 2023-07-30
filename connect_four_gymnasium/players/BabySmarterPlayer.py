@@ -10,11 +10,11 @@ class BabySmarterPlayer(Player):
         valid_moves = [c for c in range(7) if obs[0, c] == 0]
         return np.random.choice(valid_moves)
 
-    def play(self, obs):
-        if isinstance(obs, list):
-            return [self.play_single(obs) for _ in range(len(obs))]
+    def play(self, observation):
+        if isinstance(observation, list):
+            return [self.play_single(obs) for obs in observation]
         else:
-            return self.play_single(obs)
+            return self.play_single(observation)
 
     def getName(self):
         return "BabySmarterPlayer"
@@ -24,8 +24,3 @@ class BabySmarterPlayer(Player):
 
     def isDeterministic(self):
         return False
-    
-
-    # Play a random move
-        valid_moves = [c for c in range(7) if observation[0, c] == 0]
-        return np.random.choice(valid_moves)
