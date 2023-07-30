@@ -115,7 +115,7 @@ class ConnectFourEnv(gymnasium.Env):
 
     def clone_and_play(self, action):
         newself = self.clone()
-        newBoard, result, IsFinish, isTruncated = newself.step(action)
+        newBoard, result, IsFinish, isTruncated, _ = newself.step(action)
         return newBoard, result, IsFinish, isTruncated, newself
 
     def step(self, action, play_opponent=True):
