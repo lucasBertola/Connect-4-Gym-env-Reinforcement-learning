@@ -166,6 +166,10 @@ your_model_elo = EloLeaderboard().get_elo([myModelPlayer], num_matches=100)
 
 You can find an example of how to use this tool in a Google Colab notebook [here](https://colab.research.google.com/github/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/exemples/Train_ppo_and_test.ipynb).
 
+## Detailed Documentation
+
+For a comprehensive overview of the methods and classes used in this environment, please refer to the [detailed documentation](https://github.com/lucasBertola/Connect-4-Gym-env-Reinforcement-learning/blob/main/DOCUMENTATION.md) available on the GitHub repository. This documentation provides in-depth explanations and examples to help you better understand the inner workings of the Connect Four environment and make the most of its features.
+
 ## Testing
 
 We believe in the importance of testing. That's why we have included a suite of tests in the `test` directory. To run the tests, simply use the command `pytest`.
