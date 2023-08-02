@@ -26,7 +26,7 @@ class ConnectFourEnv(gymnasium.Env):
         self.action_space = spaces.Discrete(self.COLUMNS_COUNT)
 
         # 1 is you, -1 is the opponent
-        self.observation_space = spaces.Box(low=-1, high=1, shape=(self.ROWS_COUNT, self.COLUMNS_COUNT), dtype=np.int32)
+        self.observation_space = spaces.Box(low=-1, high=1, shape=(self.ROWS_COUNT, self.COLUMNS_COUNT), dtype=np.int8)
 
         # Check if the render mode is valid
         assert render_mode is None or render_mode in self.metadata["render_modes"]
@@ -38,7 +38,7 @@ class ConnectFourEnv(gymnasium.Env):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
-        self.board = np.zeros((self.ROWS_COUNT, self.COLUMNS_COUNT))
+        self.board = np.zeros((self.ROWS_COUNT, self.COLUMNS_COUNT), dtype=np.int8)
         self._render_for_human()
 
         if self.first_player is None:
@@ -123,10 +123,11 @@ class ConnectFourEnv(gymnasium.Env):
 
         result, is_finish = self._play_action(action, 1)
 
-        if is_finish:
+        self.switch_player()
+
+        if is_finish:            
             return self.board, result, True, False, {}
 
-        self.switch_player()
 
         if  play_opponent and self._opponent is not None:
             opponent_action = self._opponent.play(self.board)

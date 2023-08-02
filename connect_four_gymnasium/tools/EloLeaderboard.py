@@ -70,7 +70,6 @@ class EloLeaderboard:
 
     def get_elo(self, player, num_matches=100):
         actualElo = player.getElo() if player.getElo() is not None else 1400
-        actualElo = 1400
         return self.play_rounds(player, actualElo, num_matches)
 
     def get_scores(self, player, opponents):
