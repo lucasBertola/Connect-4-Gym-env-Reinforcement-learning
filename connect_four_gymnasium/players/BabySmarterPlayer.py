@@ -20,7 +20,7 @@ class BabySmarterPlayer(Player):
         return "BabySmarterPlayer"
 
     def getElo(self):
-        return 1060
+        return 1058
 
     def isDeterministic(self):
         return False

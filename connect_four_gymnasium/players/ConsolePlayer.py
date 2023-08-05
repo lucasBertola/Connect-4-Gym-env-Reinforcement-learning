@@ -7,14 +7,14 @@ class ConsolePlayer(Player):
     
     def play(self, _):
         move = -1
-        while move < 0 or move > 6:
+        while move < 1 or move > 7:
             try:
-                move = int(input("Enter a move between 0 and 6: "))
-                if move < 0 or move > 6:
-                    print("The move must be between 0 and 6.")
+                move = int(input("Enter a move between 1 and 7: "))
+                if move < 1 or move > 7:
+                    print("The move must be between 1 and 7.")
             except ValueError:
                 print("Please enter an integer.")
-        return move
+        return move -1
 
     def getName(self):
         return "ConsolePlayer"

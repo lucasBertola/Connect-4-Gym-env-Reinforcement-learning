@@ -20,7 +20,7 @@ class ConnectFourEnv(gymnasium.Env):
     def change_opponent(self, opponent):
         self._opponent = opponent
 
-    def __init__(self, opponent=None, render_mode=None, first_player=None):
+    def __init__(self, opponent=None, render_mode=None, first_player=None, main_player_name='IA'):
         self._opponent = opponent  # Define the opponent
         # Define the action and observation spaces
         self.action_space = spaces.Discrete(self.COLUMNS_COUNT)
@@ -35,6 +35,9 @@ class ConnectFourEnv(gymnasium.Env):
         self.last_render_time = None
         self.window = None
         self.first_player = first_player
+        self.next_player_to_play = 1
+        self.main_player_name = main_player_name
+
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
@@ -72,16 +75,13 @@ class ConnectFourEnv(gymnasium.Env):
 
     def _play_action(self, action, player):
         if not self.is_action_valid(action):
+            if self.render_mode == "human":
+                print("action_invalid played!")
             return -1, True
 
         last_move_row = self._drop_piece(action, player)
 
-        self._render_for_human()
-
         if self.check_win_around_last_move(player, last_move_row, action):
-            if self.render_mode == "human":
-                print("You won!")
-                time.sleep(5)
             return 1, True
         
         if self.board_is_full():
@@ -125,6 +125,12 @@ class ConnectFourEnv(gymnasium.Env):
 
         self.switch_player()
 
+        self._render_for_human()
+
+        if is_finish and self.render_mode == "human":
+            print("Finish!")
+            time.sleep(5)
+        
         if is_finish:            
             return self.board, result, True, False, {}
 
@@ -202,15 +208,14 @@ class ConnectFourEnv(gymnasium.Env):
         padding = 32
         padding_center = 4
         circle_radius = 32
-
         i_position = padding
         for i in range(self.ROWS_COUNT):
             j_position = padding
             for j in range(self.COLUMNS_COUNT):
                 color = (245, 245, 245)
-                if self.board[i, j] == 1:
+                if self.board[i, j] == self.next_player_to_play:
                     color = self.player_1_color
-                elif self.board[i, j] == -1:
+                elif self.board[i, j] == self.next_player_to_play*-1:
                     color = self.player_2_color
                 pygame.draw.circle(canvas, color, (j_position + circle_radius, i_position + circle_radius), circle_radius)
                 j_position += (circle_radius * 2) + padding_center
@@ -230,7 +235,7 @@ class ConnectFourEnv(gymnasium.Env):
         text_position_y_second_player = text_position_y_first_player + 40
         pygame.draw.circle(canvas, self.player_1_color, (50, text_position_y_second_player + circle_radius / 4),
                            circle_radius / 2)
-        text = font.render("IA ", 1, (10, 10, 10))
+        text = font.render(self.main_player_name, 1, (10, 10, 10))
         canvas.blit(text, (80, text_position_y_second_player))
 
         if self.render_mode == "human":

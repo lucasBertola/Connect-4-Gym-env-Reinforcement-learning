@@ -13,6 +13,12 @@ from connect_four_gymnasium.players import (
     TeenagerSmarterPlayer,
     AdultPlayer,
     AdultSmarterPlayer,
+    SelfTrained1Player,
+    SelfTrained2Player,
+    SelfTrained3Player,
+    SelfTrained4Player,
+    SelfTrained5Player,
+    SelfTrained6Player,
 )
 
 class EloLeaderboard:
@@ -22,11 +28,18 @@ class EloLeaderboard:
             BabyPlayer(),
             BabySmarterPlayer(),
             ChildPlayer(),
+            SelfTrained1Player(),
             ChildSmarterPlayer(),
             TeenagerPlayer(),
             TeenagerSmarterPlayer(),
             AdultPlayer(),
             AdultSmarterPlayer(),
+            SelfTrained2Player(),
+            SelfTrained3Player(),
+            SelfTrained4Player(),
+            SelfTrained5Player(),
+
+            
         ]
 
     def update_elo(self, player_elo, opponent_elo, player_won, k_factor=32, draw=False):
@@ -51,6 +64,7 @@ class EloLeaderboard:
         for _ in range(num_matches):
             closest_opponents = self.get_closest_opponents(actualElo, num_opponents=2)
             random.shuffle(closest_opponents)
+            # scores =[True,True]# For finding the actual max elo 
             scores = self.get_scores(player, closest_opponents)
             for opponent, score in zip(closest_opponents, scores):
                 player_won = score > 0
@@ -100,6 +114,6 @@ if __name__ == "__main__":
     import time
     elo_leaderboard = EloLeaderboard()
     start_time = time.time()
-    print(elo_leaderboard.get_elo(BabySmarterPlayer(), num_matches=20))
+    print(elo_leaderboard.get_elo(SelfTrained6Player(), num_matches=500))
     end_time = time.time()
     print(f"Time elapsed: {end_time - start_time} seconds")

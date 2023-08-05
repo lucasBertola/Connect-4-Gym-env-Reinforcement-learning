@@ -28,7 +28,7 @@ class ChildPlayer(Player):
         return "ChildPlayer"
     
     def getElo(self):
-        return 1272
+        return 1264
     
     def isDeterministic(self):
         return False

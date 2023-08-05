@@ -35,7 +35,7 @@ class ChildSmarterPlayer(Player):
         return "ChildSmarterPlayer"
 
     def getElo(self):
-        return 1571
+        return 1586
 
     def isDeterministic(self):
         return False
