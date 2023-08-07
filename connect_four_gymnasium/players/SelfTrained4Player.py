@@ -4,8 +4,6 @@ import torch.nn.functional as F
 import torch
 import numpy as np
 
-
-
 NUM_BLOCKS = 8
 NUM_CHANNELS = 128
 LEARNING_RATE = 0.001
@@ -13,8 +11,6 @@ MCTS_ITERATIONS = 100
 C_PUCT = 2.0
 DIRICHLET_EPSILON = 0.1
 DIRICHLET_ALPHA = 1.4
-#todo teset cuda 
-#tood test cuda with torch.backends.cudnn.benchmark = True
 
 class ResBlock(nn.Module):
   def __init__(self, num_channels):
@@ -41,20 +37,20 @@ class ResNet(nn.Module):
     state_size = 42 #7*6
     action_size = 7 #7*6
     self.start_block = nn.Sequential(
-      nn.Conv2d(3, num_channels, kernel_size=3, padding=1), #todo If a nn.Conv2d layer is directly followed by a nn.BatchNorm2d layer, then the bias in the convolution is not needed, instead use nn.Conv2d(..., bias=False, ....). 
+      nn.Conv2d(3, num_channels, kernel_size=3, padding=1), 
       nn.BatchNorm2d(num_channels),
       nn.ReLU()
     )
     self.res_blocks = nn.ModuleList([ResBlock(num_channels) for i in range(num_blocks)])
     self.policy_head = nn.Sequential(
-      nn.Conv2d(num_channels, 32, kernel_size=3, padding=1), #todo If a nn.Conv2d layer is directly followed by a nn.BatchNorm2d layer, then the bias in the convolution is not needed, instead use nn.Conv2d(..., bias=False, ....). 
+      nn.Conv2d(num_channels, 32, kernel_size=3, padding=1),
       nn.BatchNorm2d(32),
       nn.ReLU(),
       nn.Flatten(),
       nn.Linear(32 * state_size, action_size)
     )
     self.value_head = nn.Sequential(
-      nn.Conv2d(num_channels, 3, kernel_size=3, padding=1), #todo If a nn.Conv2d layer is directly followed by a nn.BatchNorm2d layer, then the bias in the convolution is not needed, instead use nn.Conv2d(..., bias=False, ....). 
+      nn.Conv2d(num_channels, 3, kernel_size=3, padding=1),
       nn.BatchNorm2d(3),
       nn.ReLU(),
       nn.Flatten(),
@@ -82,10 +78,6 @@ class AlphaFour:
     states = np.stack(states)
     encoded_states = np.stack((states == 1, states == 0, states == -1)).swapaxes(0, 1)
     return torch.tensor(encoded_states, dtype=torch.float32)
-
-
-
-
 
 class SelfTrained4Player(Player):
     def __init__(self, name="SelfTrained4Player",deteministic=False):

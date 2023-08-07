@@ -41,20 +41,20 @@ class ResNet(nn.Module):
     state_size = 42 #7*6
     action_size = 7 #7*6
     self.start_block = nn.Sequential(
-      nn.Conv2d(3, num_channels, kernel_size=3, padding=1), #todo If a nn.Conv2d layer is directly followed by a nn.BatchNorm2d layer, then the bias in the convolution is not needed, instead use nn.Conv2d(..., bias=False, ....). 
+      nn.Conv2d(3, num_channels, kernel_size=3, padding=1),
       nn.BatchNorm2d(num_channels),
       nn.ReLU()
     )
     self.res_blocks = nn.ModuleList([ResBlock(num_channels) for i in range(num_blocks)])
     self.policy_head = nn.Sequential(
-      nn.Conv2d(num_channels, 32, kernel_size=3, padding=1), #todo If a nn.Conv2d layer is directly followed by a nn.BatchNorm2d layer, then the bias in the convolution is not needed, instead use nn.Conv2d(..., bias=False, ....). 
+      nn.Conv2d(num_channels, 32, kernel_size=3, padding=1),
       nn.BatchNorm2d(32),
       nn.ReLU(),
       nn.Flatten(),
       nn.Linear(32 * state_size, action_size)
     )
     self.value_head = nn.Sequential(
-      nn.Conv2d(num_channels, 3, kernel_size=3, padding=1), #todo If a nn.Conv2d layer is directly followed by a nn.BatchNorm2d layer, then the bias in the convolution is not needed, instead use nn.Conv2d(..., bias=False, ....). 
+      nn.Conv2d(num_channels, 3, kernel_size=3, padding=1),
       nn.BatchNorm2d(3),
       nn.ReLU(),
       nn.Flatten(),
@@ -127,5 +127,5 @@ class SelfTrained2Player(Player):
         return self.deteministic
     
     def getElo(self):
-       return 1963
+       return 1966
     

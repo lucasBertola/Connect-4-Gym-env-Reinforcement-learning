@@ -12,6 +12,7 @@ from .SelfTrained3Player import SelfTrained3Player
 from .SelfTrained4Player import SelfTrained4Player
 from .SelfTrained5Player import SelfTrained5Player
 from .SelfTrained6Player import SelfTrained6Player
+from .SelfTrained7Player import SelfTrained7Player
 
 
 from .ModelPlayer import ModelPlayer

@@ -150,8 +150,8 @@ Here are the Elo ratings of the different algorithms:
 4. TeenagerPlayer:        1657
 3. TeenagerSmarterPlayer: 1663
 2. AdultPlayer:           1666
-1. AdultSmarterPlayer:    1778
-0. AlphaFour (AlphaZero): 2500 - Custom implementation of AlphaGo Zero in this environment. For model/code, plz open an issue.
+1. AdultSmarterPlayer:    1776
+0. AlphaFour (AlphaZero): 2750 - Custom implementation of AlphaGo Zero in this environment. For model/code, plz open an issue.
 ```
 
 In addition to the provided players, we also offer a tool to evaluate the Elo rating of your own AI model. This is extremely useful to have an "absolute" idea of the progress of your AI. For example, if an AI learns by fighting against itself, we know that it is getting stronger as it would be able to win against its older versions, but this is not enough to evaluate if it has learned a lot. This is where our tool comes in, which allows you to give an Elo rating to the AI.

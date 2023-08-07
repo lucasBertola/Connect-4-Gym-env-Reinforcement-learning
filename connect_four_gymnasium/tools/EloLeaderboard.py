@@ -19,6 +19,7 @@ from connect_four_gymnasium.players import (
     SelfTrained4Player,
     SelfTrained5Player,
     SelfTrained6Player,
+    SelfTrained7Player,
 )
 
 class EloLeaderboard:
@@ -38,8 +39,8 @@ class EloLeaderboard:
             SelfTrained3Player(),
             SelfTrained4Player(),
             SelfTrained5Player(),
-
-            
+            SelfTrained6Player(),  
+            SelfTrained7Player(),  
         ]
 
     def update_elo(self, player_elo, opponent_elo, player_won, k_factor=32, draw=False):
@@ -58,11 +59,17 @@ class EloLeaderboard:
         sorted_opponents = sorted(self.playersWithEloFixed, key=lambda opponent: abs(opponent.getElo() - player_elo))
         return sorted_opponents[:num_opponents]
 
-    def play_rounds(self, player, actualElo, num_matches):
+    def play_rounds(self, player, actualElo, num_matches, parallel):
         gamePlayed = 0
         match_results = []
+        num_matches = round(num_matches/10 if parallel else num_matches)
         for _ in range(num_matches):
             closest_opponents = self.get_closest_opponents(actualElo, num_opponents=2)
+            if parallel:
+                for _ in range(9):
+                    resultat = self.get_closest_opponents(actualElo, num_opponents=2)
+                    closest_opponents.extend(resultat)
+
             random.shuffle(closest_opponents)
             # scores =[True,True]# For finding the actual max elo 
             scores = self.get_scores(player, closest_opponents)
@@ -82,9 +89,9 @@ class EloLeaderboard:
 
         return actualElo
 
-    def get_elo(self, player, num_matches=100):
+    def get_elo(self, player, num_matches=100,parallel=False):
         actualElo = player.getElo() if player.getElo() is not None else 1400
-        return self.play_rounds(player, actualElo, num_matches)
+        return self.play_rounds(player, actualElo, num_matches,parallel)
 
     def get_scores(self, player, opponents):
         envs = [ConnectFourEnv(opponent=opponent) for opponent in opponents]
@@ -109,11 +116,10 @@ class EloLeaderboard:
 
         return scores
 
-
 if __name__ == "__main__":
     import time
     elo_leaderboard = EloLeaderboard()
     start_time = time.time()
-    print(elo_leaderboard.get_elo(SelfTrained6Player(), num_matches=500))
+    print(elo_leaderboard.get_elo(SelfTrained6Player(), num_matches=500,parallel=True))
     end_time = time.time()
     print(f"Time elapsed: {end_time - start_time} seconds")

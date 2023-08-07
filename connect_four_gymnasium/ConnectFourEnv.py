@@ -38,10 +38,13 @@ class ConnectFourEnv(gymnasium.Env):
         self.next_player_to_play = 1
         self.main_player_name = main_player_name
 
-
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         self.board = np.zeros((self.ROWS_COUNT, self.COLUMNS_COUNT), dtype=np.int8)
+        self.last_move_row = None
+        self.last_move_col = None
+        self.invalid_move_has_been_played = False
+
         self._render_for_human()
 
         if self.first_player is None:
@@ -52,12 +55,8 @@ class ConnectFourEnv(gymnasium.Env):
         if self._opponent is not None:
             if self.next_player_to_play == -1:
                 opponent_action = self._opponent.play(self.board)
-                result, isFinish = self._play_action(opponent_action, self.next_player_to_play)
-                if isFinish :
-                    print('wtf')
-                    print(opponent_action)
-                    exit("The opponent played an invalid action in the first move!")
-                self.next_player_to_play = 1
+                self.play_action(opponent_action)
+                self.switch_player()
 
             self._render_for_human()
 
@@ -73,22 +72,35 @@ class ConnectFourEnv(gymnasium.Env):
     def is_action_valid(self, action):
         return action >= self.MIN_INDEX_TO_PLAY and action < self.COLUMNS_COUNT and not self.is_column_full(action)
 
-    def _play_action(self, action, player):
-        if not self.is_action_valid(action):
-            if self.render_mode == "human":
-                print("action_invalid played!")
-            return -1, True
+    def is_finish(self):
+        if self.invalid_move_has_been_played:
+            return self.board[self.last_move_row, self.last_move_col], True
 
-        last_move_row = self._drop_piece(action, player)
-
-        if self.check_win_around_last_move(player, last_move_row, action):
-            return 1, True
+        if self.last_move_col is None or self.last_move_row is None:
+            return 0, False
+        
+        if self.check_win_around_last_move(self.last_move_row, self.last_move_col):
+            return self.board[self.last_move_row, self.last_move_col], True
         
         if self.board_is_full():
             return 0, True
-
+        
         return 0, False
 
+    def play_action(self, action):
+        if not self.is_action_valid(action):
+            if self.render_mode == "human":
+                print("action_invalid played!")
+            self.invalid_move_has_been_played = True
+            return 
+        
+        for i in range(self.ROWS_COUNT - 1, -1, -1):
+            if self.board[i, action] == 0:
+                self.board[i, action] = 1
+                self.last_move_row = i
+                self.last_move_col = action
+                return 
+            
     def board_is_full(self):
         return np.all(self.board != 0)
     
@@ -111,17 +123,17 @@ class ConnectFourEnv(gymnasium.Env):
         new_env = ConnectFourEnv(opponent=self._opponent, render_mode=self.render_mode, first_player=self.first_player)
         new_env.next_player_to_play = self.next_player_to_play
         new_env.board = self.board.copy()
+        new_env.last_move_row = self.last_move_row
+        new_env.last_move_col = self.last_move_col
+        new_env.invalid_move_has_been_played = self.invalid_move_has_been_played
         return new_env
-
-    def clone_and_play(self, action):
-        newself = self.clone()
-        newBoard, result, IsFinish, isTruncated, _ = newself.step(action)
-        return newBoard, result, IsFinish, isTruncated, newself
 
     def step(self, action, play_opponent=True):
         action = action.item() if isinstance(action, np.ndarray) else action
 
-        result, is_finish = self._play_action(action, 1)
+        self.play_action(action)
+
+        result, is_finish = self.is_finish()
 
         self.switch_player()
 
@@ -134,7 +146,6 @@ class ConnectFourEnv(gymnasium.Env):
         if is_finish:            
             return self.board, result, True, False, {}
 
-
         if  play_opponent and self._opponent is not None:
             opponent_action = self._opponent.play(self.board)
             opponent_result = self.step(opponent_action, play_opponent=False)
@@ -142,15 +153,9 @@ class ConnectFourEnv(gymnasium.Env):
             
         return self.board, 0, False, False, {}
 
-    def _drop_piece(self, action, player):
-        for i in range(self.ROWS_COUNT - 1, -1, -1):
-            if self.board[i, action] == 0:
-                self.board[i, action] = player
-                return i
-        print('wtf', self.is_action_valid(action))
-        exit("Someone played an invalid action!")
+    def check_win_around_last_move(self, row, col):
 
-    def check_win_around_last_move(self, player, row, col):
+        player = self.board[row, col]
         directions = [
             (1, 0),  # horizontal
             (0, 1),  # vertical
