@@ -74,7 +74,8 @@ class AlphaFour:
     import os
     current_script_path = os.path.dirname(os.path.realpath(__file__))
     weights_file_path =current_script_path+'/SelfTrained5PlayerWeight.pt'
-    self.model.load_state_dict(torch.load(weights_file_path))
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    self.model.load_state_dict(torch.load(weights_file_path, map_location=device))
 
   def obs_to_tensor(self, states):
     states = np.stack(states)
