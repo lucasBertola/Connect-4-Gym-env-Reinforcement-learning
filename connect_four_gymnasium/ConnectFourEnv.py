@@ -231,7 +231,7 @@ class ConnectFourEnv(gymnasium.Env):
         pygame.draw.circle(canvas, self.player_2_color, (50, text_position_y_first_player + circle_radius / 4),
                            circle_radius / 2)
         font = pygame.font.Font(None, 36)
-        opponent_name = self._opponent.getName()
+        opponent_name =  self._opponent.getName() if self._opponent is not None else "Opponent"
         text = font.render(f"{opponent_name}", 1, (10, 10, 10))
 
         canvas.blit(text, (80, text_position_y_first_player))

@@ -62,7 +62,7 @@ class EloLeaderboard:
     def play_rounds(self, player, actualElo, num_matches, parallel):
         gamePlayed = 0
         match_results = []
-        num_matches = round(num_matches/10 if parallel else num_matches)
+        num_matches = round(max(num_matches/10,1) if parallel else num_matches)
         for _ in range(num_matches):
             closest_opponents = self.get_closest_opponents(actualElo, num_opponents=2)
             if parallel:
